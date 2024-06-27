@@ -126,25 +126,28 @@
         upload.addEventListener('click', triggerFileInput);
         upload.addEventListener('touchend', triggerFileInput);
 
-          fileInput.addEventListener('change', function(event) {
-                var file = event.target.files[0];
-                var reader = new FileReader();
+        fileInput.addEventListener('change', function(event) {
+          var file = event.target.files[0];
+          if (!file) {
+            return;
+          }
+          var reader = new FileReader();
 
-                reader.onload = function(e) {
-                  var uploadArea = document.getElementById('uploadphotohere');
-                    uploadArea.style.backgroundImage = 'url(' + e.target.result + ')';
-                    uploadArea.style.backgroundSize = 'cover';
-                    uploadArea.style.backgroundPosition = 'center';
-                };
+          reader.onload = function(e) {
+            var uploadArea = document.getElementById('up-photo1');
+            uploadArea.style.backgroundImage = 'url(' + e.target.result + ')';
+            uploadArea.style.backgroundSize = 'cover';
+            uploadArea.style.backgroundPosition = 'center';
+          };
 
-                if (file) {
-                    reader.readAsDataURL(file);
-                }
-            });
+          reader.readAsDataURL(file);
+        });
       });
     </script>
   </body>
 </html>
+
+
 
 
 
