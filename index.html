@@ -18,7 +18,9 @@
           <div class="frame-parent">
             <div class="frame">
               <img class="beige-1-icon" alt="" src="/INCEPTIO/beige.png" id="background" />
-              <div class="uploadphotohere" id="uploadphotohere"></div>
+              <div class="uploadphotohere" id="uploadphotohere">
+                <div class="up-photo1" id="up-photo1"></div>
+              </div>
               <img
                 class="jk-1-icon"
                 loading="lazy"
@@ -63,7 +65,7 @@
               <div class="upload-options-wrapper">
                 <div class="upload-options">
                   <div class="upload" id="upload">
-                    <input type="file" id="fileInput" style="display: none;" />
+                    <input type="file" id="fileInput" style="opacity: 0; width: 100%; height: 100%; position: absolute; left: 0; top: 0;" />
                     <div class="uploadbutton" id="uploadButton"></div>
                     <div class="upload-photo">Upload Photo</div>
                   </div>
@@ -122,21 +124,26 @@
         }
 
         upload.addEventListener('click', triggerFileInput);
-        upload.addEventListener('touchend', triggerFileInput);
+        upload.addEventListener('touchstart', triggerFileInput);
 
         fileInput.addEventListener('change', function(event) {
-          const file = event.target.files[0];
-          if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-              const uploadArea = document.getElementById('uploadphotohere');
-              uploadArea.style.backgroundImage = 'url(' + e.target.result + ')';
-              uploadArea.style.backgroundSize = 'cover';
-              uploadArea.style.backgroundPosition = 'center';
-            }
-            reader.readAsDataURL(file);
+          var file = event.target.files[0];
+          if (!file) {
+            return;
           }
+          var reader = new FileReader();
+
+          reader.onload = function(e) {
+            var uploadArea = document.getElementById('up-photo1');
+            uploadArea.style.backgroundImage = 'url(' + e.target.result + ')';
+            uploadArea.style.backgroundSize = 'cover';
+            uploadArea.style.backgroundPosition = 'center';
+          };
+
+          reader.readAsDataURL(file);
         });
+
+        
       });
     </script>
   </body>

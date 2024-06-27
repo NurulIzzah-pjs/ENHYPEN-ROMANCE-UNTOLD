@@ -1,3 +1,4 @@
+
 .beige-1-icon {
   position: absolute;
   top: 0;
@@ -8,17 +9,28 @@
   /* display: none; */
 }
 .uploadphotohere {
-    position: absolute;
-    top: 17px;
-    left: 16px;
-    background-color: var(--color-white);
-    width: 274px;
-    height: 281px;
-    z-index: 1;
-    background-size: cover;
-    background-position: center;
+  background-color: var(--color-black);
+	top: 17px;
+  left: 16px;
+  width: 274px;
+  height: 281px;
+/*   width: 100%;
+  height: 100%; */
+  z-index: 1;
+/*   background-size: cover; */
+	position: absolute; 
+background-position: center;
+	position: absolute; 
+
   }
   
+  .up-photo1 {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-black);
+    background-size: cover; /* Ensure the uploaded image covers the div */
+	  background-position: center; /* Center the background image */ 
+   } 
   .uploadbutton {
     height: 24px;
     width: 97px;
@@ -53,12 +65,15 @@
 .jk-1-icon {
   width: 100%;
   height: 100%;
+	background-color: transparent;
   object-fit: cover;
   z-index: 2;
 }
 .frame {
   width: 307px;
   height: 350px;
+  /* width: 100%;
+  height: 100%;  */
   background-image: url(./public/beige-1@2x.png);
   background-size: cover;
   background-repeat: no-repeat;
@@ -490,7 +505,7 @@
   text-align: center;
   font-size: var(--font-size-base);
   color: var(--color-white);
-  font-family: var(--font-nerko-one);
+  font-family: 'Nerko One';
 }
 .credit-1-icon {
   align-self: stretch;
@@ -540,7 +555,7 @@ body {
   
   :root {
     /* fonts */
-    --font-nerko-one: "Nerko One";
+    /* --font-nerko-one: "Nerko One"; */
   
     /* font sizes */
     --font-size-base: 16px;
@@ -567,3 +582,7 @@ body {
     --br-lgi: 19px;
   }
   
+  
+@font-face {
+	font-family: 'Nerko One';
+	src: url('/fonts/NerkoOne-Regular.ttf');}
