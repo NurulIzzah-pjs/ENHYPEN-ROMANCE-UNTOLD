@@ -19,7 +19,7 @@
             <div class="frame">
               <img class="beige-1-icon" alt="" src="/INCEPTIO/beige.png" id="background" />
               <div class="uploadphotohere" id="uploadphotohere">
-                <div class="up-photo1" id="up-photo1"></div>
+<!--                 <div class="up-photo1" id="up-photo1"></div> -->
               </div>
               <img
                 class="jk-1-icon"
@@ -134,7 +134,7 @@
           var reader = new FileReader();
 
           reader.onload = function(e) {
-            var uploadArea = document.getElementById('up-photo1');
+            var uploadArea = document.getElementById('uploadphotohere');
             uploadArea.style.backgroundImage = 'url(' + e.target.result + ')';
             uploadArea.style.backgroundSize = 'cover';
             uploadArea.style.backgroundPosition = 'center';
