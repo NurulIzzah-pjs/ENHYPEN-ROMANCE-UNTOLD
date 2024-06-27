@@ -31,6 +31,12 @@
     justify-content: center;
     overflow: hidden; */
   }
+
+@media only screen and (max-width: 600px) {
+  .uploadphotohere {
+    width: auto;
+    height: auto;
+  }
   
   .up-photo1 {
     width: 100%;
