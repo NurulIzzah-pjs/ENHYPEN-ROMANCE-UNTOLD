@@ -65,7 +65,7 @@
               <div class="upload-options-wrapper">
                 <div class="upload-options">
                   <div class="upload" id="upload">
-                    <input type="file" id="fileInput" style="display: none;" />
+                    <input type="file" id="fileInput" style="opacity: 0; width: 100%; height: 100%; position: absolute; left: 0; top: 0;" />
                     <div class="uploadbutton" id="uploadButton"></div>
                     <div class="upload-photo">Upload Photo</div>
                   </div>
@@ -124,7 +124,7 @@
         }
 
         upload.addEventListener('click', triggerFileInput);
-        upload.addEventListener('touchend', triggerFileInput);
+        upload.addEventListener('touchstart', triggerFileInput);
 
         fileInput.addEventListener('change', function(event) {
           var file = event.target.files[0];
