@@ -127,15 +127,17 @@
         upload.addEventListener('touchend', triggerFileInput);
 
         fileInput.addEventListener('change', function(event) {
-          const file = event.target.files[0];
-          if (file) {
-            const reader = new FileReader();
+          var file = event.target.files[0];
+            var reader = new FileReader();
+
             reader.onload = function(e) {
               const uploadArea = document.getElementById('up-photo1');
               uploadArea.style.backgroundImage = 'url(' + e.target.result + ')';
               uploadArea.style.backgroundSize = 'cover';
               uploadArea.style.backgroundPosition = 'center';
-            }
+            };
+
+            if (file) {
             reader.readAsDataURL(file);
           }
         });
@@ -143,6 +145,5 @@
     </script>
   </body>
 </html>
-
 
 
