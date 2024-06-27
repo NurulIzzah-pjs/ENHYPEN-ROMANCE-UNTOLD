@@ -21,11 +21,11 @@
   background-position: center;
   }
 
-@media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
   .uploadphotohere {
     width: auto;
     height: auto;
-  }
+  } */
   
   .up-photo1 {
     width: 100%;
