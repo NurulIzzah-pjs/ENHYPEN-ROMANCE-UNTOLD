@@ -12,10 +12,10 @@
   top: 17px;
   left: 16px;
   background-color: transparent;
-/*   width: 274px;
-  height: 281px; */
-  width: 100%;
-  height: 100%;
+  width: 274px;
+  height: 281px;
+/*   width: 100%;
+  height: 100%; */
   z-index: 1;
   background-size: cover;
   background-position: center;
