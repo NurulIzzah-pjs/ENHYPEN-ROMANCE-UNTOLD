@@ -9,9 +9,6 @@
   /* display: none; */
 }
 .uploadphotohere {
-  position: absolute;
-  top: 0;
-  left: 0;
   background-color: var(--color-black);
 /*   width: 274px;
   height: 281px; */
