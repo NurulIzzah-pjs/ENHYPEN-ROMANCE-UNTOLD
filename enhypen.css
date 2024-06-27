@@ -490,7 +490,7 @@
   text-align: center;
   font-size: var(--font-size-base);
   color: var(--color-white);
-  font-family: var(--font-nerko-one);
+  font-family: 'Nerko One';
 }
 .credit-1-icon {
   align-self: stretch;
@@ -540,7 +540,7 @@ body {
   
   :root {
     /* fonts */
-    --font-nerko-one: "Nerko One";
+    /* --font-nerko-one: "Nerko One"; */
   
     /* font sizes */
     --font-size-base: 16px;
@@ -567,3 +567,7 @@ body {
     --br-lgi: 19px;
   }
   
+  
+@font-face {
+	font-family: 'Nerko One';
+	src: url('/fonts/NerkoOne-Regular.ttf');}
