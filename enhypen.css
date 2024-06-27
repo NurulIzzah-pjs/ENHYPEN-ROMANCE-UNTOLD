@@ -8,17 +8,28 @@
   /* display: none; */
 }
 .uploadphotohere {
-    position: absolute;
+    /* position: absolute;
     top: 17px;
     left: 16px;
-    background-color: var(--color-white);
-/*     width: 274px;
+    background-color: var(--color-white); */
+    /* width: 274px;
     height: 281px; */
-	 width: 90%;
+    /* width: 90%;
     height: 90%;
     z-index: 1;
     background-size: cover;
-    background-position: center;
+    background-position: center; */
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    z-index: 1;
+    background-color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
   }
   
   .uploadbutton {
@@ -572,4 +583,4 @@ body {
   
 @font-face {
 	font-family: 'Nerko One';
-	src: url('/FONTS/NerkoOne-Regular.ttf');}
+	src: url('/fonts/NerkoOne-Regular.ttf');}
