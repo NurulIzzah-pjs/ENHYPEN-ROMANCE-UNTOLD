@@ -10,8 +10,8 @@
 }
 .uploadphotohere {
   background-color: var(--color-black);
-	top: 0;
-  left: 0;
+	top: 17px;
+  left: 16px;
   width: 274px;
   height: 281px;
 /*   width: 100%;
@@ -19,7 +19,7 @@
   z-index: 1;
 /*   background-size: cover; */
 	position: absolute; 
-/*   background-position: center;
+background-position: center;
 	position: absolute; 
 /*     top: 5%;
     left: 5%;
