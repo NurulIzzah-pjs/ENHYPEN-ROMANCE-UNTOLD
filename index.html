@@ -3,13 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
-
     <link rel="stylesheet" href="./enhypen.css" />
-
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Nerko One:wght@400&display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nerko+One:wght@400&display=swap" />
   </head>
   <body>
     <div class="container">
@@ -19,13 +14,7 @@
             <div class="frame">
               <img class="beige-1-icon" alt="" src="/INCEPTIO/beige.png" id="background" />
               <div class="uploadphotohere" id="uploadphotohere"></div>
-              <img
-                class="jk-1-icon"
-                loading="lazy"
-                alt=""
-                src="/INCEPTIO/JK.png"
-                id="mainImage"
-              />
+              <img class="jk-1-icon" loading="lazy" alt="" src="/INCEPTIO/JK.png" id="mainImage" />
             </div>
             <div class="won-parent">
               <div class="won" onclick="changeImage('/INCEPTIO/JW.png')" ontouchend="changeImage('/INCEPTIO/JW.png')">
@@ -117,7 +106,8 @@
         var upload = document.getElementById('upload');
         var fileInput = document.getElementById('fileInput');
 
-        function triggerFileInput() {
+        function triggerFileInput(event) {
+          event.preventDefault();
           fileInput.click();
         }
 
@@ -133,7 +123,7 @@
               uploadArea.style.backgroundImage = 'url(' + e.target.result + ')';
               uploadArea.style.backgroundSize = 'cover';
               uploadArea.style.backgroundPosition = 'center';
-            }
+            };
             reader.readAsDataURL(file);
           }
         });
@@ -141,3 +131,4 @@
     </script>
   </body>
 </html>
+
