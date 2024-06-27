@@ -1,3 +1,4 @@
+
 .beige-1-icon {
   position: absolute;
   top: 0;
@@ -73,6 +74,7 @@
 .jk-1-icon {
   width: 100%;
   height: 100%;
+	background-color: transparent;
   object-fit: cover;
   z-index: 2;
 }
