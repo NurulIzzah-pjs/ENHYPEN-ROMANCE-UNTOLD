@@ -19,8 +19,8 @@
   width: 100%;
   height: 100%;
   z-index: 2;
-/*   background-size: cover;
-  background-position: center; */
+  background-size: cover;
+  background-position: center;
     /* position: absolute;
     top: 5%;
     left: 5%;
@@ -34,13 +34,13 @@
     overflow: hidden; */
   }
   
-  .up-photo1 {
+/*   .up-photo1 {
     width: 100%;
     height: 100%;
     background-color: var(--color-black);
     background-size: cover; /* Ensure the uploaded image covers the div */
-    background-position: center; /* Center the background image */
-  }
+/*     background-position: center; /* Center the background image */ 
+/*   } */ 
   .uploadbutton {
     height: 24px;
     width: 97px;
