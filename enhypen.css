@@ -5,32 +5,37 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-/*   display: none; */
+  /* display: none; */
 }
 .uploadphotohere {
   position: absolute;
   top: 17px;
   left: 16px;
-  background-color:  var(--color-black);
+  background-color: transparent;
   width: 274px;
   height: 281px;
-/*   width: 100%;
+  /* width: 100%;
   height: 100%; */
   z-index: 1;
   background-size: cover;
   background-position: center;
+    /* position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    z-index: 1;
+    background-color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; */
   }
-
-/* @media only screen and (max-width: 600px) {
-  .uploadphotohere {
-    width: auto;
-    height: auto;
-  } */
   
   .up-photo1 {
     width: 100%;
     height: 100%;
-    background-color: var(--color-black);
+    background-color: var(--color-white);
     background-size: cover; /* Ensure the uploaded image covers the div */
     background-position: center; /* Center the background image */
   }
@@ -78,18 +83,6 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
-}
-
-@media only screen and (max-width: 600px) {
-  .uploadphotohere {
-    width: auto;
-    height: auto;
-  }
-
-  .up-photo1 {
-    width: 100%;
-    height: 100%;
-  }
 }
 .hsbutton {
   height: 24px;
