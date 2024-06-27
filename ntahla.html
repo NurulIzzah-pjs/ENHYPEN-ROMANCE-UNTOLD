@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="./enhypen.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nerko One:wght@400&display=swap"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="iphone-14-15-pro-max-1">
+        <section class="iphone-14-15-pro-max-1-inner">
+          <div class="frame-parent">
+            <div class="frame">
+              <img class="beige-1-icon" alt="" src="/INCEPTIO/beige.png" id="background" />
+              <div class="uploadphotohere" id="uploadphotohere"></div>
+              <img
+                class="jk-1-icon"
+                loading="lazy"
+                alt=""
+                src="/INCEPTIO/JK.png"
+                id="mainImage"
+              />
+            </div>
+            <div class="won-parent">
+              <div class="won" onclick="changeImage('/INCEPTIO/JW.png')" ontouchend="changeImage('/INCEPTIO/JW.png')">
+                <div class="hsbutton"></div>
+                <div class="jungwon">Jungwon</div>
+              </div>
+              <div class="hee" onclick="changeImage('/INCEPTIO/HS.png')" ontouchend="changeImage('/INCEPTIO/HS.png')">
+                <div class="hsbutton1"></div>
+                <div class="heeseung">Heeseung</div>
+              </div>
+              <div class="jay" onclick="changeImage('/INCEPTIO/JY.png')" ontouchend="changeImage('/INCEPTIO/JY.png')">
+                <div class="jybutton"></div>
+                <div class="jay1">Jay</div>
+              </div>
+              <div class="jake" onclick="changeImage('/INCEPTIO/JK.png')" ontouchend="changeImage('/INCEPTIO/JK.png')">
+                <div class="jkbutton"></div>
+                <div class="jake1">Jake</div>
+              </div>
+              <div class="hoon" onclick="changeImage('/INCEPTIO/SH.png')" ontouchend="changeImage('/INCEPTIO/SH.png')">
+                <div class="shbutton"></div>
+                <div class="sunghoon">Sunghoon</div>
+              </div>
+              <div class="ddeonu" onclick="changeImage('/INCEPTIO/SN.png')" ontouchend="changeImage('/INCEPTIO/SN.png')">
+                <div class="snbutton"></div>
+                <div class="sunoo">
+                  <p class="sunoo1">Sunoo</p>
+                </div>
+              </div>
+              <div class="riki" onclick="changeImage('/INCEPTIO/NK.png')" ontouchend="changeImage('/INCEPTIO/NK.png')">
+                <div class="nkbutton"></div>
+                <div class="ni-ki">Ni-ki</div>
+              </div>
+            </div>
+            <div class="frame-group">
+              <div class="upload-options-wrapper">
+                <div class="upload-options">
+                  <div class="upload" id="upload">
+                    <input type="file" id="fileInput" style="display: none;" />
+                    <div class="uploadbutton" id="uploadButton"></div>
+                    <div class="upload-photo">Upload Photo</div>
+                  </div>
+                  <div class="save">
+                    <div class="savebutton"></div>
+                    <div class="save-edit">Save Edit</div>
+                  </div>
+                  <div class="download">
+                    <div class="dlbutton"></div>
+                    <div class="download1">Download</div>
+                  </div>
+                </div>
+              </div>
+              <div class="frame-container">
+                <div class="frame-colour-wrapper">
+                  <div class="frame-colour">Frame colour :</div>
+                </div>
+                <div class="inceptio-parent">
+                  <div class="inceptio" onclick="changeBG('/INCEPTIO/beige.png')" ontouchend="changeBG('/INCEPTIO/beige.png')">
+                    <div class="ibutton"></div>
+                    <div class="inceptio1">Inceptio</div>
+                  </div>
+                  <div class="arcanum" onclick="changeBG('/INCEPTIO/teal.png')" ontouchend="changeBG('/INCEPTIO/teal.png')">
+                    <div class="abutton"></div>
+                    <div class="arcanum1">
+                      <p class="arcanum2">Arcanum</p>
+                    </div>
+                  </div>
+                  <div class="concessio" onclick="changeBG('/INCEPTIO/blue.png')" ontouchend="changeBG('/INCEPTIO/blue.png')">
+                    <div class="cbutton"></div>
+                    <div class="concessio1">Concessio</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <img class="credit-1-icon" alt="" src="/INCEPTIO/credit.png" />
+      </div>
+    </div>
+    <script>
+      function changeImage(newSrc) {
+        document.getElementById('mainImage').src = newSrc;
+      }
+
+      function changeBG(newSrc) {
+        document.getElementById('background').src = newSrc;
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var upload = document.getElementById('upload');
+        var fileInput = document.getElementById('fileInput');
+
+        function triggerFileInput() {
+          fileInput.click();
+        }
+
+        upload.addEventListener('click', triggerFileInput);
+        upload.addEventListener('touchend', triggerFileInput);
+
+        fileInput.addEventListener('change', function(event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              const uploadArea = document.getElementById('uploadphotohere');
+              uploadArea.style.backgroundImage = 'url(' + e.target.result + ')';
+              uploadArea.style.backgroundSize = 'cover';
+              uploadArea.style.backgroundPosition = 'center';
+            }
+            reader.readAsDataURL(file);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
