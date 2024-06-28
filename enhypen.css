@@ -552,6 +552,44 @@ body {
     display: flex;
     min-height: 100vh;
   }
+
+  /* Style for the button container */
+#buttonContainer {
+  position: absolute; /* Fixed positioning for the entire container */
+  bottom: 0; /* Position it above the bottom of the viewport */
+  left: 35%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust for half of its own width */
+  display: flex;
+  flex-direction: column; /* Arrange buttons vertically */
+  /* align-items: center; Center buttons horizontally */
+  gap: 5px; /* Add 5px gap between buttons */
+  z-index: 1; /* Ensure it appears above other content if needed */
+}
+
+/* General button styles */
+#buttonContainer button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: rgb(134, 88, 88); /* Box brown filled */
+  color: white; /* Text white */
+  border: none;
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Add hover effect for all buttons */
+#buttonContainer button:hover {
+  background-color: #5c4033; /* Darker shade of brown for hover effect */
+}
+
+/* Optional: Add focus effect for accessibility */
+#buttonContainer button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
   
   :root {
     /* fonts */
