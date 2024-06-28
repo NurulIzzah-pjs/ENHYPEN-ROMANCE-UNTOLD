@@ -6,17 +6,10 @@
     <title>Your Title Here</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <link rel="stylesheet" href="./enhypen.css" />
     <style>
         /* Add your CSS styles here */
-        .frame {
-            display: block;
-        }
-        .error-message {
-            color: red;
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
@@ -67,17 +60,18 @@
                     <div class="frame-group">
                         <div class="upload-options-wrapper">
                             <div class="upload-options">
-                                <button onclick="toggleEdit(true)" id="btnEdit">Edit</button>
                                 <div class="upload" id="upload">
                                     <div class="uploadbutton" id="uploadButton"></div>
                                     <div class="upload-photo">Upload Photo</div>
                                 </div>
-                                <div class="save" id="saveEditButton" onclick="confirmEdit()" ontouchend="confirmEdit()">
+                                <div class="save" id="saveEditButton" onclick="confirmEdit()">
                                     <div class="savebutton"></div>
                                     <div class="save-edit">Save Edit</div>
                                 </div>
-                                <button onclick="prepareCardDownload()" id="btnDownload">Download</button>
-                                <div class="error-message" id="errorMessage"></div>
+                                <div class="download" id="downloadButton" onclick="prepareCardDownload()">
+                                    <div class="dlbutton"></div>
+                                    <div class="download1">Download</div>
+                                </div>
                             </div>
                         </div>
                         <div class="frame-container">
@@ -110,160 +104,129 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
-       function changeImage(newSrc) {
-    document.getElementById('mainImage').src = newSrc;
-}
 
-function changeBG(newSrc) {
-    document.getElementById('background').src = newSrc;
-}
-
-var imagesLoaded = false; // Track if images are loaded
-var isEditing = false; // Track if the card is in edit mode
-
-function loadImagesBeforeDownload() {
-    var images = document.querySelectorAll('.frame img');
-    var promises = [];
-
-    images.forEach(function(img) {
-        promises.push(loadImage(img.src));
-    });
-
-    promises.push(loadImage('/INCEPTIO/beige.png'));
-
-    Promise.all(promises).then(function() {
-        imagesLoaded = true;
-        document.getElementById('btnDownload').disabled = false;
-    }).catch(function(error) {
-        console.error('Error loading images:', error);
-        displayError('Error loading images: ' + error);
-    });
-}
-
-function loadImage(url) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => resolve();
-        img.onerror = () => reject('Failed to load image: ' + url);
-        img.src = url;
-    });
-}
-
-function prepareCardDownload() {
-    if (!imagesLoaded) {
-        loadImagesBeforeDownload(); // Load images if not already loaded
-    } else {
-        downloadCard(); // Images are already loaded, proceed to download
-    }
-}
-
-// Function to download the card
-function downloadCard() {
-    if (!imagesLoaded) {
-        console.log('Images are not loaded yet.');
-        displayError('Images are not loaded yet.');
-        return;
-    }
-
-    var cardElement = document.querySelector('.frame');
-
-    // Get dimensions of the card area
-    var rect = cardElement.getBoundingClientRect();
-    var width = rect.width;
-    var height = rect.height;
-
-    var scale = 2; // Example: Increase resolution by 2x
-    var scaledWidth = width * scale;
-    var scaledHeight = height * scale;
-
-    var options = {
-        width: scaledWidth,
-        height: scaledHeight,
-        style: {
-            transform: 'scale(' + scale + ')', // Scale up for higher resolution
-            transformOrigin: 'top left' // Set transform origin to top left corner
+function changeImage(newSrc) {
+            document.getElementById('mainImage').src = newSrc;
         }
-    };
 
-    var offsetX = (scaledWidth - width) / 2;
-    var offsetY = (scaledHeight - height) / 2;
-    cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)'; // Apply translation to center the image
-
-    // Generate image
-    domtoimage.toPng(cardElement, options).then(function(blob) {
-        window.saveAs(blob, 'YourCard.png');
-        cardElement.style.transform = ''; 
-        toggleEdit(false);
-        displayError('Download Successful!'); // Show success message
-    }).catch(function(error) {
-        console.error('Error generating image:', error);
-        displayError('Error generating image: ' + error);
-    });
-
-    document.getElementById('btnDownload').disabled = true;
-}
-
-function toggleEdit(editable) {
-    isEditing = editable; 
-
-    var idPhoto = document.getElementById('up-photo1');
-    if (editable) {
-        idPhoto.style.pointerEvents = 'auto';
-    } else {
-        idPhoto.style.pointerEvents = 'none';
-    }
-    document.getElementById('btnDownload').disabled = true; // Disable download button when editing
-}
-
-function confirmEdit() {
-    document.getElementById('btnDownload').disabled = false;
-}
-
-function displayError(message) {
-    var errorMessage = document.getElementById('errorMessage');
-    errorMessage.textContent = message;
-    setTimeout(() => {
-        errorMessage.textContent = ''; // Clear the message after a few seconds
-    }, 3000);
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    var upload = document.getElementById('upload');
-    var fileInput = document.getElementById('fileInput');
-    var idPhoto = document.getElementById('up-photo1');
-
-    function triggerFileInput() {
-        fileInput.click();
-    }
-
-    upload.addEventListener('click', triggerFileInput);
-    upload.addEventListener('touchstart', triggerFileInput);
-
-    fileInput.addEventListener('change', function(event) {
-        var file = event.target.files[0];
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-            idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
-            idPhoto.style.backgroundSize = 'cover';
-            idPhoto.style.backgroundPosition = 'center';
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
+        function changeBG(newSrc) {
+            document.getElementById('background').src = newSrc;
         }
-    });
+        var imagesLoaded = false; // Track if images are loaded
+        var isEditing = false; // Track if the card is in edit mode
 
-    var btnDownload = document.getElementById('btnDownload');
-    btnDownload.addEventListener('click', function() {
-        downloadCard();
-    });
+        function loadImagesBeforeDownload() {
+            var images = document.querySelectorAll('.frame img');
+            var promises = [];
 
-    loadImagesBeforeDownload();
-});
+            images.forEach(function(img) {
+                promises.push(loadImage(img.src));
+            });
 
+            Promise.all(promises).then(function() {
+                imagesLoaded = true;
+            }).catch(function(error) {
+                console.error('Error loading images:', error);
+                throw error; // Propagate the error
+            });
+        }
+
+        function loadImage(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve();
+                img.onerror = () => reject();
+                img.src = url;
+            });
+        }
+
+        function prepareCardDownload() {
+            if (!imagesLoaded) {
+                loadImagesBeforeDownload(); // Load images if not already loaded
+            } else {
+                downloadCard(); // Images are already loaded, proceed to download
+            }
+        }
+
+        // Function to download the card
+        function downloadCard() {
+            if (!imagesLoaded) {
+                console.log('Images are not loaded yet.');
+                return;
+            }
+
+            var cardElement = document.querySelector('.frame');
+
+            // Get dimensions of the card area
+            var rect = cardElement.getBoundingClientRect();
+            var width = rect.width;
+            var height = rect.height;
+
+            var scale = 10; // Example: Increase resolution by 2x
+            var scaledWidth = width * scale;
+            var scaledHeight = height * scale;
+
+            var options = {
+                width: scaledWidth,
+                height: scaledHeight,
+                style: {
+                    transform: 'scale(' + scale + ')', // Scale up for higher resolution
+                    transformOrigin: 'top left', // Set transform origin to top left corner
+                    'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
+                },
+                filter: function(node) {
+                    return (node.className !== 'editable'); // Exclude editable inputs from the image
+                }
+            };
+
+            // Generate image
+            domtoimage.toPng(cardElement, options).then(function(blob) {
+                window.saveAs(blob, 'YourCard.png');
+            }).catch(function(error) {
+                console.error('Error generating image:', error);
+            });
+        }
+
+        function confirmEdit() {
+            isEditing = false;
+            document.getElementById('downloadButton').style.display = 'block';
+            document.getElementById('saveEditButton').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var upload = document.getElementById('upload');
+            var fileInput = document.getElementById('fileInput');
+            var idPhoto = document.getElementById('up-photo1');
+
+            function triggerFileInput() {
+                fileInput.click();
+            }
+
+            upload.addEventListener('click', triggerFileInput);
+            upload.addEventListener('touchstart', triggerFileInput);
+
+            fileInput.addEventListener('change', function(event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+
+                    var uploadArea = document.getElementById('up-photo1');
+                    idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
+                    idPhoto.style.backgroundSize = 'cover';
+                    idPhoto.style.backgroundPosition = 'center';
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            loadImagesBeforeDownload();
+        });
     </script>
 </body>
 </html>
+
 
 
