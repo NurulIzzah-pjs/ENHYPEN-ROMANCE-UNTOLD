@@ -64,15 +64,14 @@
                                     <div class="uploadbutton" id="uploadButton"></div>
                                     <div class="upload-photo">Upload Photo</div>
                                 </div>
-                                <div class="save" id="saveEditButton" onclick="confirmEdit()"  ontouchend="confirmEdit()">
+                                <div class="save" id="saveEditButton" onclick="confirmEdit()">
                                     <div class="savebutton"></div>
                                     <div class="save-edit">Save Edit</div>
                                 </div>
-                                <button onclick="prepareCardDownload()" id="btnDownload">Download</button>
-                                <!-- <div class="download" id="downloadButton" onclick="prepareCardDownload()"  ontouchend="prepareCardDownload()" >
+                                <div class="download" id="downloadButton" onclick="prepareCardDownload()">
                                     <div class="dlbutton"></div>
                                     <div class="download1">Download</div>
-                                </div> -->
+                                </div>
                             </div>
                         </div>
                         <div class="frame-container">
@@ -126,13 +125,10 @@ function changeImage(newSrc) {
 
             Promise.all(promises).then(function() {
                 imagesLoaded = true;
-                if (document.getElementById('btnDownload').disabled) {
-            document.getElementById('btnDownload').disabled = false;
-        }
-    }).catch(function(error) {
-        console.error('Error loading images:', error);
-        throw error; // Propagate the error
-    });
+            }).catch(function(error) {
+                console.error('Error loading images:', error);
+                throw error; // Propagate the error
+            });
         }
 
         function loadImage(url) {
@@ -166,7 +162,7 @@ function changeImage(newSrc) {
             var width = rect.width;
             var height = rect.height;
 
-            var scale = 10; // Example: Increase resolution by 2x
+            var scale = 5; // Example: Increase resolution by 2x
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
@@ -189,13 +185,12 @@ function changeImage(newSrc) {
             }).catch(function(error) {
                 console.error('Error generating image:', error);
             });
-
-            document.getElementById('btnDownload').disabled = true;
         }
 
         function confirmEdit() {
-            // isEditing = false;
-            document.getElementById('btnDownload').disabled = false;
+            isEditing = false;
+            document.getElementById('downloadButton').style.display = 'block';
+            document.getElementById('saveEditButton').style.display = 'none';
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -227,16 +222,7 @@ function changeImage(newSrc) {
                 }
             });
 
-
-            var btnDownload = document.getElementById('btnDownload');
-            btnDownload.addEventListener('click', function() {
-                // loadImagesBeforeDownload();
-                downloadCard() ;
-            });
-
             loadImagesBeforeDownload();
-
-            document.getElementById('btnDownload').addEventListener('click', prepareCardDownload);
         });
     </script>
 </body>
