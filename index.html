@@ -199,7 +199,12 @@ function changeImage(newSrc) {
             var upload = document.getElementById('upload');
             var fileInput = document.getElementById('fileInput');
             var idPhoto = document.getElementById('up-photo1');
-        downloadButton.addEventListener('touchend', prepareCardDownload);
+        downloadButton.addEventListener('touchstart', prepareCardDownload);
+downloadButton.addEventListener('click', prepareCardDownload);
+
+saveEditButton.addEventListener('touchstart', confirmEdit);
+saveEditButton.addEventListener('click', confirmEdit);
+
             function triggerFileInput() {
                 fileInput.click();
             }
