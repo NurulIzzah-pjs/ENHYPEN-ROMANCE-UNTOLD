@@ -2,11 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Your Title Here</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <link rel="stylesheet" href="./enhypen.css" />
     <style>
         /* Add your CSS styles here */
@@ -103,19 +104,16 @@
             <img class="credit-1-icon" alt="" src="/INCEPTIO/credit.png" />
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
-
-function changeImage(newSrc) {
+        function changeImage(newSrc) {
             document.getElementById('mainImage').src = newSrc;
         }
 
         function changeBG(newSrc) {
             document.getElementById('background').src = newSrc;
         }
+
         var imagesLoaded = false; // Track if images are loaded
-        var isEditing = false; // Track if the card is in edit mode
 
         function loadImagesBeforeDownload() {
             var images = document.querySelectorAll('.frame img');
@@ -152,62 +150,61 @@ function changeImage(newSrc) {
 
         // Function to download the card
         function downloadCard() {
-    var errorMessage = document.getElementById('errorMessage');
-    var successMessage = document.getElementById('successMessage');
+            var errorMessage = document.getElementById('errorMessage');
+            var successMessage = document.getElementById('successMessage');
 
-    errorMessage.style.display = 'none'; // Hide previous error messages
-    successMessage.style.display = 'none'; // Hide previous success messages
+            errorMessage.style.display = 'none'; // Hide previous error messages
+            successMessage.style.display = 'none'; // Hide previous success messages
 
-    if (!imagesLoaded) {
-        errorMessage.textContent = 'Images are not loaded yet.';
-        errorMessage.style.display = 'block';
-        return;
-    }
+            if (!imagesLoaded) {
+                errorMessage.textContent = 'Images are not loaded yet.';
+                errorMessage.style.display = 'block';
+                return;
+            }
 
-    var cardElement = document.querySelector('.frame');
+            var cardElement = document.querySelector('.frame');
 
-    if (!cardElement) {
-        errorMessage.textContent = 'Card element not found.';
-        errorMessage.style.display = 'block';
-        return;
-    }
+            if (!cardElement) {
+                errorMessage.textContent = 'Card element not found.';
+                errorMessage.style.display = 'block';
+                return;
+            }
 
-    // Get dimensions of the card area
-    var rect = cardElement.getBoundingClientRect();
-    var width = rect.width;
-    var height = rect.height;
+            // Get dimensions of the card area
+            var rect = cardElement.getBoundingClientRect();
+            var width = rect.width;
+            var height = rect.height;
 
-    var scale = 10; // Example: Increase resolution by 10x
-    var scaledWidth = width * scale;
-    var scaledHeight = height * scale;
+            var scale = 2; // Example: Increase resolution by 2x
+            var scaledWidth = width * scale;
+            var scaledHeight = height * scale;
 
-    var options = {
-        width: scaledWidth,
-        height: scaledHeight,
-        style: {
-            transform: 'scale(' + scale + ')', // Scale up for higher resolution
-            transformOrigin: 'top left', // Set transform origin to top left corner
-            'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
-        },
-        filter: function(node) {
-            return (node.className !== 'editable'); // Exclude editable inputs from the image
+            var options = {
+                width: scaledWidth,
+                height: scaledHeight,
+                style: {
+                    transform: 'scale(' + scale + ')', // Scale up for higher resolution
+                    transformOrigin: 'top left', // Set transform origin to top left corner
+                    'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
+                },
+                filter: function(node) {
+                    return (node.className !== 'editable'); // Exclude editable inputs from the image
+                }
+            };
+
+            // Generate image
+            domtoimage.toPng(cardElement, options).then(function(blob) {
+                window.saveAs(blob, 'YourCard.png');
+                successMessage.textContent = 'Download successful!';
+                successMessage.style.display = 'block';
+            }).catch(function(error) {
+                errorMessage.textContent = 'Error generating image: ' + error.message;
+                errorMessage.style.display = 'block';
+                console.error('Error generating image:', error);
+            });
         }
-    };
-
-    // Generate image
-    domtoimage.toPng(cardElement, options).then(function(blob) {
-        window.saveAs(blob, 'YourCard.png');
-        successMessage.textContent = 'Download successful!';
-        successMessage.style.display = 'block';
-    }).catch(function(error) {
-        errorMessage.textContent = 'Error generating image: ' + error.message;
-        errorMessage.style.display = 'block';
-        console.error('Error generating image:', error);
-    });
-}
 
         function confirmEdit() {
-            isEditing = false;
             document.getElementById('downloadButton').style.display = 'block';
             document.getElementById('saveEditButton').style.display = 'none';
         }
@@ -229,8 +226,6 @@ function changeImage(newSrc) {
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
-
-                    var uploadArea = document.getElementById('up-photo1');
                     idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
                     idPhoto.style.backgroundSize = 'cover';
                     idPhoto.style.backgroundPosition = 'center';
