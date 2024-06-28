@@ -114,7 +114,7 @@ function changeImage(newSrc) {
             document.getElementById('background').src = newSrc;
         }
         var imagesLoaded = false; // Track if images are loaded
-        var isEditing = false; // Track if the card is in edit mode
+       
 
         function loadImagesBeforeDownload() {
             var images = document.querySelectorAll('.frame img');
@@ -197,7 +197,7 @@ function changeImage(newSrc) {
         }
 
         function confirmEdit() {
-            isEditing = false;
+            
             document.getElementById('downloadButton').style.display = 'block';
             document.getElementById('saveEditButton').style.display = 'none';
         }
