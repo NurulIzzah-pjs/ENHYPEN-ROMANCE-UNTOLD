@@ -218,7 +218,6 @@ function downloadCard() {
         function confirmEdit() {
             document.getElementById('downloadButton').style.display = 'block';
             document.getElementById('saveEditButton').style.display = 'none';
-            prepareCardDownload();
             console.log('Edit saved successfully.');
         }
 
@@ -251,9 +250,7 @@ function downloadCard() {
             });
 
             loadImagesBeforeDownload();
-var downloadButton = document.getElementById('downloadButton');
-downloadButton.addEventListener('click', function() {
-    prepareCardDownload();
+
 });
         });
     </script>
