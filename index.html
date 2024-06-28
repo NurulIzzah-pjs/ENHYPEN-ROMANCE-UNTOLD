@@ -251,6 +251,10 @@ function downloadCard() {
             });
 
             loadImagesBeforeDownload();
+var downloadButton = document.getElementById('downloadButton');
+downloadButton.addEventListener('click', function() {
+    prepareCardDownload();
+});
         });
     </script>
 </body>
