@@ -1,3 +1,6 @@
+
+HTML 2
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +71,7 @@
                                     <div class="savebutton"></div>
                                     <div class="save-edit">Save Edit</div>
                                 </div>
-                                <div class="download" id="downloadButton" >
+                                <div class="download" id="downloadButton" onclick="prepareCardDownload()">
                                     <div class="dlbutton"></div>
                                     <div class="download1">Download</div>
                                 </div>
@@ -101,12 +104,17 @@
             <img class="credit-1-icon" alt="" src="/INCEPTIO/credit.png" />
         </div>
     </div>
-       <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script>
 
-        function changeImage(newSrc) {
+function changeImage(newSrc) {
             document.getElementById('mainImage').src = newSrc;
         }
 
+        function changeBG(newSrc) {
+            document.getElementById('background').src = newSrc;
+        }
         var imagesLoaded = false; // Track if images are loaded
         var isEditing = false; // Track if the card is in edit mode
 
@@ -205,6 +213,7 @@
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
+
                     var uploadArea = document.getElementById('up-photo1');
                     idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
                     idPhoto.style.backgroundSize = 'cover';
@@ -216,14 +225,8 @@
                 }
             });
 
-            // Bind download function to the download button
-            document.getElementById('downloadButton').addEventListener('click', prepareCardDownload);
-
             loadImagesBeforeDownload();
         });
     </script>
 </body>
 </html>
-
-
-
