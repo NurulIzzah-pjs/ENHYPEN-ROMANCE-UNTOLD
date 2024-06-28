@@ -77,10 +77,7 @@
                                     <div class="save-edit">Save Edit</div>
                                 </div>
                                 <button onclick="prepareCardDownload()" id="btnDownload">Download</button>
-                                <!-- <div class="download" id="downloadButton" onclick="prepareCardDownload()" ontouchend="prepareCardDownload()">
-                                    <div class="dlbutton"></div>
-                                    <div class="download1">Download</div>
-                                </div> -->
+                                <div class="error-message" id="errorMessage"></div>
                             </div>
                         </div>
                         <div class="frame-container">
@@ -110,7 +107,6 @@
             <img class="credit-1-icon" alt="" src="/INCEPTIO/credit.png" />
         </div>
     </div>
-    <div class="error-message" id="errorMessage"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
@@ -191,78 +187,5 @@
 
             var offsetX = (scaledWidth - width) / 2;
             var offsetY = (scaledHeight - height) / 2;
-            cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)'; // Apply translation to center the image
-
-            // Generate image
-            domtoimage.toPng(cardElement, options).then(function(blob) {
-                window.saveAs(blob, 'YourCard.png');
-                cardElement.style.transform = ''; 
-                toggleEdit(false);
-            }).catch(function(error) {
-                console.error('Error generating image:', error);
-                displayError('Error generating image: ' + error);
-            });
-
-            document.getElementById('btnDownload').disabled = true;
-        }
-
-        function toggleEdit(editable) {
-            isEditing = editable; 
-
-            var idPhoto = document.getElementById('up-photo1');
-            if (editable) {
-                idPhoto.style.pointerEvents = 'auto';
-            } else {
-                idPhoto.style.pointerEvents = 'none';
-            }
-            document.getElementById('btnDownload').disabled = true; // Disable download button when editing
-        }
-
-        function confirmEdit() {
-            document.getElementById('btnDownload').disabled = false;
-        }
-
-        function displayError(message) {
-            var errorMessage = document.getElementById('errorMessage');
-            errorMessage.textContent = message;
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var upload = document.getElementById('upload');
-            var fileInput = document.getElementById('fileInput');
-            var idPhoto = document.getElementById('up-photo1');
-
-            function triggerFileInput() {
-                fileInput.click();
-            }
-
-            upload.addEventListener('click', triggerFileInput);
-            upload.addEventListener('touchstart', triggerFileInput);
-
-            fileInput.addEventListener('change', function(event) {
-                var file = event.target.files[0];
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
-                    idPhoto.style.backgroundSize = 'cover';
-                    idPhoto.style.backgroundPosition = 'center';
-                };
-
-                if (file) {
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            var btnDownload = document.getElementById('btnDownload');
-            btnDownload.addEventListener('click', function() {
-                downloadCard();
-            });
-
-            loadImagesBeforeDownload();
-        });
-    </script>
-</body>
-</html>
-
+            cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)';
 
