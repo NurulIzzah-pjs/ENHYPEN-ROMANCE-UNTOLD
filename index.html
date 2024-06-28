@@ -12,6 +12,11 @@
         .frame {
             display: block;
         }
+        .error-message {
+            color: red;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -105,6 +110,7 @@
             <img class="credit-1-icon" alt="" src="/INCEPTIO/credit.png" />
         </div>
     </div>
+    <div class="error-message" id="errorMessage"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
@@ -134,6 +140,7 @@
                 document.getElementById('btnDownload').disabled = false;
             }).catch(function(error) {
                 console.error('Error loading images:', error);
+                displayError('Error loading images: ' + error);
             });
         }
 
@@ -141,7 +148,7 @@
             return new Promise((resolve, reject) => {
                 const img = new Image();
                 img.onload = () => resolve();
-                img.onerror = () => reject();
+                img.onerror = () => reject('Failed to load image: ' + url);
                 img.src = url;
             });
         }
@@ -158,6 +165,7 @@
         function downloadCard() {
             if (!imagesLoaded) {
                 console.log('Images are not loaded yet.');
+                displayError('Images are not loaded yet.');
                 return;
             }
 
@@ -192,6 +200,7 @@
                 toggleEdit(false);
             }).catch(function(error) {
                 console.error('Error generating image:', error);
+                displayError('Error generating image: ' + error);
             });
 
             document.getElementById('btnDownload').disabled = true;
@@ -211,6 +220,11 @@
 
         function confirmEdit() {
             document.getElementById('btnDownload').disabled = false;
+        }
+
+        function displayError(message) {
+            var errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -250,4 +264,5 @@
     </script>
 </body>
 </html>
+
 
