@@ -171,12 +171,13 @@ function changeImage(newSrc) {
             var scaledHeight = height * scale;
 
             var options = {
+                 console.log('u r in option');
                 width: scaledWidth,
                 height: scaledHeight,
                 style: {
                     transform: 'scale(' + scale + ')', // Scale up for higher resolution
                     transformOrigin: 'top left', // Set transform origin to top left corner
-                    'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
+                    // 'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
                 },
                 filter: function(node) {
                     return (node.className !== 'editable'); // Exclude editable inputs from the image
@@ -184,12 +185,22 @@ function changeImage(newSrc) {
             };
 
             // Generate image
-            domtoimage.toPng(cardElement, options).then(function(blob) {
-                window.saveAs(blob, 'YourCard.png');
-                console.log('Download successful!');
-            }).catch(function(error) {
-                console.error('Error generating image:', error);
-            });
+            // domtoimage.toPng(cardElement, options).then(function(blob) {
+            //     window.saveAs(blob, 'YourCard.png');
+            //     console.log('Download successful!');
+            // }).catch(function(error) {
+            //     console.error('Error generating image:', error);
+            // });
+                domtoimage.toPng(cardElement, options).then(function(dataUrl) {
+                    console.log('u r in dom');
+        var link = document.createElement('a');
+        link.download = 'YourCard.png';
+        link.href = dataUrl;
+        link.click();
+        console.log('Download successful!');
+    }).catch(function(error) {
+        console.error('Error generating image:', error);
+    });
         }
 
         function confirmEdit() {
