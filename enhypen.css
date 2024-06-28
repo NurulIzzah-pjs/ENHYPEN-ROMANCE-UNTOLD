@@ -1,4 +1,3 @@
-
 .beige-1-icon {
   position: absolute;
   top: 0;
@@ -74,7 +73,7 @@ background-position: center;
   height: 350px;
   /* width: 100%;
   height: 100%;  */
-  background-image: url(./public/beige-1@2x.png);
+  background-image: url('/INCEPTIO/beige.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
