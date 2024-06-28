@@ -6,10 +6,12 @@
     <title>Your Title Here</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <link rel="stylesheet" href="./enhypen.css" />
     <style>
         /* Add your CSS styles here */
+        .frame {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -60,16 +62,17 @@
                     <div class="frame-group">
                         <div class="upload-options-wrapper">
                             <div class="upload-options">
+                                <button onclick="toggleEdit(true)" id="btnEdit">Edit</button>
                                 <div class="upload" id="upload">
                                     <div class="uploadbutton" id="uploadButton"></div>
                                     <div class="upload-photo">Upload Photo</div>
                                 </div>
-                                <div class="save" id="saveEditButton" onclick="confirmEdit()"  ontouchend="confirmEdit()">
+                                <div class="save" id="saveEditButton" onclick="confirmEdit()" ontouchend="confirmEdit()">
                                     <div class="savebutton"></div>
                                     <div class="save-edit">Save Edit</div>
                                 </div>
                                 <button onclick="prepareCardDownload()" id="btnDownload">Download</button>
-                                <!-- <div class="download" id="downloadButton" onclick="prepareCardDownload()"  ontouchend="prepareCardDownload()" >
+                                <!-- <div class="download" id="downloadButton" onclick="prepareCardDownload()" ontouchend="prepareCardDownload()">
                                     <div class="dlbutton"></div>
                                     <div class="download1">Download</div>
                                 </div> -->
@@ -105,14 +108,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
-
-function changeImage(newSrc) {
+        function changeImage(newSrc) {
             document.getElementById('mainImage').src = newSrc;
         }
 
         function changeBG(newSrc) {
             document.getElementById('background').src = newSrc;
         }
+
         var imagesLoaded = false; // Track if images are loaded
         var isEditing = false; // Track if the card is in edit mode
 
@@ -128,13 +131,10 @@ function changeImage(newSrc) {
 
             Promise.all(promises).then(function() {
                 imagesLoaded = true;
-                if (document.getElementById('btnDownload').disabled) {
-            document.getElementById('btnDownload').disabled = false;
-        }
-    }).catch(function(error) {
-        console.error('Error loading images:', error);
-        throw error; // Propagate the error
-    });
+                document.getElementById('btnDownload').disabled = false;
+            }).catch(function(error) {
+                console.error('Error loading images:', error);
+            });
         }
 
         function loadImage(url) {
@@ -168,7 +168,7 @@ function changeImage(newSrc) {
             var width = rect.width;
             var height = rect.height;
 
-            var scale = 10; // Example: Increase resolution by 2x
+            var scale = 10; // Example: Increase resolution by 10x
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
@@ -177,22 +177,19 @@ function changeImage(newSrc) {
                 height: scaledHeight,
                 style: {
                     transform: 'scale(' + scale + ')', // Scale up for higher resolution
-                    transformOrigin: 'top left', // Set transform origin to top left corner
-                
+                    transformOrigin: 'top left' // Set transform origin to top left corner
                 }
-                // filter: function(node) {
-                //     return (node.className !== 'editable'); // Exclude editable inputs from the image
-                // }
             };
 
-                        var offsetX = (scaledWidth - width) / 2;
-    var offsetY = (scaledHeight - height) / 2;
-    cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)'; 
+            var offsetX = (scaledWidth - width) / 2;
+            var offsetY = (scaledHeight - height) / 2;
+            cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)'; // Apply translation to center the image
 
             // Generate image
             domtoimage.toPng(cardElement, options).then(function(blob) {
                 window.saveAs(blob, 'YourCard.png');
-                 cardSide.style.transform = ''; 
+                cardElement.style.transform = ''; 
+                toggleEdit(false);
             }).catch(function(error) {
                 console.error('Error generating image:', error);
             });
@@ -200,8 +197,19 @@ function changeImage(newSrc) {
             document.getElementById('btnDownload').disabled = true;
         }
 
+        function toggleEdit(editable) {
+            isEditing = editable; 
+
+            var idPhoto = document.getElementById('up-photo1');
+            if (editable) {
+                idPhoto.style.pointerEvents = 'auto';
+            } else {
+                idPhoto.style.pointerEvents = 'none';
+            }
+            document.getElementById('btnDownload').disabled = true; // Disable download button when editing
+        }
+
         function confirmEdit() {
-            // isEditing = false;
             document.getElementById('btnDownload').disabled = false;
         }
 
@@ -222,8 +230,6 @@ function changeImage(newSrc) {
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
-
-                    var uploadArea = document.getElementById('up-photo1');
                     idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
                     idPhoto.style.backgroundSize = 'cover';
                     idPhoto.style.backgroundPosition = 'center';
@@ -234,17 +240,14 @@ function changeImage(newSrc) {
                 }
             });
 
-
             var btnDownload = document.getElementById('btnDownload');
             btnDownload.addEventListener('click', function() {
-                // loadImagesBeforeDownload();
-                downloadCard() ;
+                downloadCard();
             });
 
             loadImagesBeforeDownload();
-
-            document.getElementById('btnDownload').addEventListener('click', prepareCardDownload);
         });
     </script>
 </body>
 </html>
+
