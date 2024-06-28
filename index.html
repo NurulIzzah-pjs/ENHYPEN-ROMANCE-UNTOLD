@@ -105,7 +105,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
-
         function changeImage(newSrc) {
             document.getElementById('mainImage').src = newSrc;
         }
@@ -113,6 +112,7 @@
         function changeBG(newSrc) {
             document.getElementById('background').src = newSrc;
         }
+
         var imagesLoaded = false; // Track if images are loaded
         var isEditing = false; // Track if the card is in edit mode
 
@@ -153,7 +153,6 @@
             }
         }
 
-        // Function to download the card
         function downloadCard() {
             if (!imagesLoaded) {
                 console.log('Images are not loaded yet.');
@@ -185,7 +184,7 @@
             };
 
             // Generate image
-            domtoimage.toPng(cardElement, options).then(function(blob) {
+            domtoimage.toBlob(cardElement, options).then(function(blob) {
                 saveAs(blob, 'YourCard.png');
             }).catch(function(error) {
                 console.error('Error generating image:', error);
@@ -239,5 +238,6 @@
     </script>
 </body>
 </html>
+
 
 
