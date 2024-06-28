@@ -171,7 +171,6 @@ function changeImage(newSrc) {
             var scaledHeight = height * scale;
 
             var options = {
-                 console.log('u r in option');
                 width: scaledWidth,
                 height: scaledHeight,
                 style: {
@@ -183,7 +182,7 @@ function changeImage(newSrc) {
                     return (node.className !== 'editable'); // Exclude editable inputs from the image
                 }
             };
-
+console.log('u r done upscaling');
             // Generate image
             // domtoimage.toPng(cardElement, options).then(function(blob) {
             //     window.saveAs(blob, 'YourCard.png');
