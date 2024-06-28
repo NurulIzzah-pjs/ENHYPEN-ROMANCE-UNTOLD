@@ -1,8 +1,11 @@
+
+HTML 1
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <title>Your Title Here</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -65,11 +68,11 @@
                                     <div class="uploadbutton" id="uploadButton"></div>
                                     <div class="upload-photo">Upload Photo</div>
                                 </div>
-                                <div class="save" id="saveEditButton" onclick="confirmEdit()" ontouchend="confirmEdit()">
+                                <div class="save" id="saveEditButton" onclick="confirmEdit()" ontouchend= "confirmEdit()">
                                     <div class="savebutton"></div>
                                     <div class="save-edit">Save Edit</div>
                                 </div>
-                                <div class="download" id="downloadButton" onclick="prepareCardDownload()" ontouchend="prepareCardDownload()">
+                                <div class="download" id="downloadButton" onclick="prepareCardDownload()" ontouchend= "prepareCardDownload()">
                                     <div class="dlbutton"></div>
                                     <div class="download1">Download</div>
                                 </div>
@@ -105,15 +108,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
-        function changeImage(newSrc) {
+
+function changeImage(newSrc) {
             document.getElementById('mainImage').src = newSrc;
         }
 
         function changeBG(newSrc) {
             document.getElementById('background').src = newSrc;
         }
-        
         var imagesLoaded = false; // Track if images are loaded
+        var isEditing = false; // Track if the card is in edit mode
 
         function loadImagesBeforeDownload() {
             var images = document.querySelectorAll('.frame img');
@@ -163,7 +167,7 @@
             var width = rect.width;
             var height = rect.height;
 
-            var scale = 10; // Example: Increase resolution by 10x
+            var scale = 10; // Example: Increase resolution by 2x
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
@@ -176,32 +180,69 @@
                     'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
                 },
                 filter: function(node) {
-                    return (node.tagName !== 'i');
+                    return (node.className !== 'editable'); // Exclude editable inputs from the image
                 }
             };
 
-            domtoimage.toBlob(cardElement, options).then(function(blob) {
-                window.saveAs(blob, 'card.png');
-            }).catch(function(error) {
-                console.error('Error generating image:', error);
-                alert('Failed to download the card. Please try again.');
-            });
+            // Generate image
+            domtoimage.toPng(cardElement, options).then(function(blob) {
+        // Check if the browser is mobile
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+            // Use FileSaver.js to save the file on mobile
+            saveAs(blob, 'YourCard.png');
+        } else {
+            // Use window.saveAs for other browsers
+            window.saveAs(blob, 'YourCard.png');
+        }
+    }).catch(function(error) {
+        console.error('Error generating image:', error);
+    });
         }
 
-        // Upload photo functionality
-        $(document).ready(function() {
-            $("#uploadButton").click(function() {
-                $("#fileInput").click();
+        function confirmEdit() {
+            isEditing = false;
+            document.getElementById('downloadButton').style.display = 'block';
+            document.getElementById('saveEditButton').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var downloadButton = document.getElementById('downloadButton');
+            var upload = document.getElementById('upload');
+            var fileInput = document.getElementById('fileInput');
+            var idPhoto = document.getElementById('up-photo1');
+             document.getElementById('downloadButton').disabled = true;
+            
+        downloadButton.addEventListener('touchstart', prepareCardDownload);
+downloadButton.addEventListener('click', prepareCardDownload);
+
+saveEditButton.addEventListener('touchstart', confirmEdit);
+saveEditButton.addEventListener('click', confirmEdit);
+
+            function triggerFileInput() {
+                fileInput.click();
+            }
+
+            upload.addEventListener('click', triggerFileInput);
+            upload.addEventListener('touchstart', triggerFileInput);
+
+            fileInput.addEventListener('change', function(event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+
+                    var uploadArea = document.getElementById('up-photo1');
+                    idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
+                    idPhoto.style.backgroundSize = 'cover';
+                    idPhoto.style.backgroundPosition = 'center';
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
             });
 
-            $("#fileInput").change(function(e) {
-                var reader = new FileReader();
-                reader.onload = function(event) {
-                    var img = $('<img>').attr('src', event.target.result).addClass('uploaded-image');
-                    $("#up-photo1").html(img);
-                }
-                reader.readAsDataURL(e.target.files[0]);
-            });
+            loadImagesBeforeDownload();
         });
     </script>
 </body>
