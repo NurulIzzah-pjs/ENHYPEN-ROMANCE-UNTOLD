@@ -2,12 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <title>Your Title Here</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <link rel="stylesheet" href="./enhypen.css" />
     <style>
         /* Add your CSS styles here */
@@ -65,11 +64,11 @@
                                     <div class="uploadbutton" id="uploadButton"></div>
                                     <div class="upload-photo">Upload Photo</div>
                                 </div>
-                                <div class="save" id="saveEditButton" onclick="confirmEdit()" ontouchend="confirmEdit()">
+                                <div class="save" id="saveEditButton" onclick="confirmEdit()">
                                     <div class="savebutton"></div>
                                     <div class="save-edit">Save Edit</div>
                                 </div>
-                                <div class="download" id="downloadButton" onclick="prepareCardDownload()" ontouchend="prepareCardDownload()">
+                                <div class="download" id="downloadButton" onclick="prepareCardDownload()">
                                     <div class="dlbutton"></div>
                                     <div class="download1">Download</div>
                                 </div>
@@ -106,7 +105,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
 
-        function changeImage(newSrc) {
+function changeImage(newSrc) {
             document.getElementById('mainImage').src = newSrc;
         }
 
@@ -124,12 +123,8 @@
                 promises.push(loadImage(img.src));
             });
 
-            promises.push(loadImage('mainImage'));
-            promises.push(loadImage('background'));
-
             Promise.all(promises).then(function() {
                 imagesLoaded = true;
-                document.getElementById('downloadButton').disabled = false;
             }).catch(function(error) {
                 console.error('Error loading images:', error);
                 throw error; // Propagate the error
@@ -167,7 +162,7 @@
             var width = rect.width;
             var height = rect.height;
 
-            var scale = 10; // Example: Increase resolution by 10x
+            var scale = 10; // Example: Increase resolution by 2x
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
@@ -186,7 +181,7 @@
 
             // Generate image
             domtoimage.toPng(cardElement, options).then(function(blob) {
-                saveAs(blob, 'YourCard.png');
+                window.saveAs(blob, 'YourCard.png');
             }).catch(function(error) {
                 console.error('Error generating image:', error);
             });
@@ -199,17 +194,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            var downloadButton = document.getElementById('downloadButton');
             var upload = document.getElementById('upload');
             var fileInput = document.getElementById('fileInput');
             var idPhoto = document.getElementById('up-photo1');
-            document.getElementById('downloadButton').disabled = true;
-
-            downloadButton.addEventListener('touchstart', prepareCardDownload);
-            downloadButton.addEventListener('click', prepareCardDownload);
-
-            saveEditButton.addEventListener('touchstart', confirmEdit);
-            saveEditButton.addEventListener('click', confirmEdit);
 
             function triggerFileInput() {
                 fileInput.click();
@@ -223,6 +210,7 @@
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
+
                     var uploadArea = document.getElementById('up-photo1');
                     idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
                     idPhoto.style.backgroundSize = 'cover';
@@ -239,7 +227,6 @@
     </script>
 </body>
 </html>
-
 
 
 
