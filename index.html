@@ -194,6 +194,7 @@
                 window.saveAs(blob, 'YourCard.png');
                 cardElement.style.transform = ''; 
                 toggleEdit(false);
+                displayError('Download Successful!'); // Show success message
             }).catch(function(error) {
                 console.error('Error generating image:', error);
                 displayError('Error generating image: ' + error);
@@ -221,6 +222,9 @@
         function displayError(message) {
             var errorMessage = document.getElementById('errorMessage');
             errorMessage.textContent = message;
+            setTimeout(() => {
+                errorMessage.textContent = ''; // Clear the message after a few seconds
+            }, 3000);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -260,4 +264,5 @@
     </script>
 </body>
 </html>
+
 
