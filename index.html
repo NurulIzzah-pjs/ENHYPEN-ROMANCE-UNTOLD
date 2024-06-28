@@ -194,10 +194,11 @@ function changeImage(newSrc) {
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            var downloadButton = document.getElementById('downloadButton');
             var upload = document.getElementById('upload');
             var fileInput = document.getElementById('fileInput');
             var idPhoto = document.getElementById('up-photo1');
-
+        downloadButton.addEventListener('touchend', prepareCardDownload);
             function triggerFileInput() {
                 fileInput.click();
             }
