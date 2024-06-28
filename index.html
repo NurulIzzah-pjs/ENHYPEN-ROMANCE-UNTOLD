@@ -101,17 +101,16 @@
             <img class="credit-1-icon" alt="" src="/INCEPTIO/credit.png" />
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
 
-function changeImage(newSrc) {
+        function changeImage(newSrc) {
             document.getElementById('mainImage').src = newSrc;
         }
 
         function changeBG(newSrc) {
             document.getElementById('background').src = newSrc;
         }
+
         var imagesLoaded = false; // Track if images are loaded
         var isEditing = false; // Track if the card is in edit mode
 
@@ -125,6 +124,7 @@ function changeImage(newSrc) {
 
             Promise.all(promises).then(function() {
                 imagesLoaded = true;
+                downloadCard(); // Once images are loaded, proceed to download
             }).catch(function(error) {
                 console.error('Error loading images:', error);
                 throw error; // Propagate the error
@@ -140,15 +140,6 @@ function changeImage(newSrc) {
             });
         }
 
-        function prepareCardDownload() {
-            if (!imagesLoaded) {
-                loadImagesBeforeDownload(); // Load images if not already loaded
-            } else {
-                downloadCard(); // Images are already loaded, proceed to download
-            }
-        }
-
-        // Function to download the card
         function downloadCard() {
             if (!imagesLoaded) {
                 console.log('Images are not loaded yet.');
@@ -187,6 +178,14 @@ function changeImage(newSrc) {
             });
         }
 
+        function prepareCardDownload() {
+            // Reset imagesLoaded flag
+            imagesLoaded = false;
+
+            // Load images before downloading
+            loadImagesBeforeDownload();
+        }
+
         function confirmEdit() {
             isEditing = false;
             document.getElementById('downloadButton').style.display = 'block';
@@ -203,27 +202,22 @@ function changeImage(newSrc) {
             }
 
             upload.addEventListener('click', triggerFileInput);
-            upload.addEventListener('touchstart', triggerFileInput);
-
-            fileInput.addEventListener('change', function(event) {
-                var file = event.target.files[0];
+            fileInput.addEventListener('change', function() {
+                var file = fileInput.files[0];
                 var reader = new FileReader();
 
-                reader.onload = function(e) {
-
-                    var uploadArea = document.getElementById('up-photo1');
-                    idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
-                    idPhoto.style.backgroundSize = 'cover';
-                    idPhoto.style.backgroundPosition = 'center';
+                reader.onloadend = function() {
+                    idPhoto.style.backgroundImage = 'url(' + reader.result + ')';
                 };
 
                 if (file) {
                     reader.readAsDataURL(file);
+                } else {
+                    idPhoto.style.backgroundImage = null;
                 }
             });
-
-            loadImagesBeforeDownload();
         });
+
     </script>
 </body>
 </html>
