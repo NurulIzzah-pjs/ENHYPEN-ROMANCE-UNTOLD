@@ -2,12 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
     <title>Your Title Here</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <link rel="stylesheet" href="./enhypen.css" />
     <style>
         /* Add your CSS styles here */
@@ -73,7 +72,6 @@
                                     <div class="dlbutton"></div>
                                     <div class="download1">Download</div>
                                 </div>
-                                <div id="errorMessage" style="color: red; display: none; margin-top: 10px;"></div>
                             </div>
                         </div>
                         <div class="frame-container">
@@ -103,18 +101,20 @@
             <img class="credit-1-icon" alt="" src="/INCEPTIO/credit.png" />
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
-        function changeImage(newSrc) {
+
+function changeImage(newSrc) {
             document.getElementById('mainImage').src = newSrc;
-            console.log('Image changed successfully.');
+            console.log('Background changed successfully.');
         }
 
         function changeBG(newSrc) {
             document.getElementById('background').src = newSrc;
-            console.log('Background changed successfully.');
         }
-
         var imagesLoaded = false; // Track if images are loaded
+        var isEditing = false; // Track if the card is in edit mode
 
         function loadImagesBeforeDownload() {
             var images = document.querySelectorAll('.frame img');
@@ -143,7 +143,7 @@
         }
 
         function prepareCardDownload() {
-             console.log('u r in prepare');
+            console.log('u r in prepare');
             if (!imagesLoaded) {
                 loadImagesBeforeDownload(); // Load images if not already loaded
             } else {
@@ -152,101 +152,21 @@
         }
 
         // Function to download the card
-// function downloadCard() {
-
-//     console.log('u r in downcard');
-//     // var errorMessage = document.getElementById('errorMessage');
-
-//     // errorMessage.style.display = 'none'; // Hide previous error messages
-
-//     if (!imagesLoaded) {
-//         errorMessage.textContent = 'Images are not loaded yet.';
-//         errorMessage.style.display = 'block';
-//         return;
-//     }
-
-//     var cardElement = document.querySelector('.frame');
-
-//     if (!cardElement) {
-//         errorMessage.textContent = 'Card element not found.';
-//         errorMessage.style.display = 'block';
-//         return;
-//     }
-
-//     // Get dimensions of the card area
-//     var rect = cardElement.getBoundingClientRect();
-//     var width = rect.width;
-//     var height = rect.height;
-
-//     var scale = 2; // Example: Increase resolution by 2x
-//     var scaledWidth = width * scale;
-//     var scaledHeight = height * scale;
-
-//     var options = {
-//         width: scaledWidth,
-//         height: scaledHeight,
-//         style: {
-//             transform: 'scale(' + scale + ')', // Scale up for higher resolution
-//             transformOrigin: 'top left', // Set transform origin to top left corner
-//             'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
-//         },
-//         filter: function(node) {
-//             return (node.className !== 'editable'); // Exclude editable inputs from the image
-//         }
-//     };
-
-//     // Generate image
-//     domtoimage.toPng(cardElement, options).then(function(blob) {
-//         // Create a temporary link element
-//         var link = document.createElement('a');
-//         link.href = URL.createObjectURL(blob);
-//         link.download = 'YourCard.png';
-
-//         // Append the link to the body
-//         document.body.appendChild(link);
-
-//         // Trigger the download
-//         link.click();
-
-//         // Clean up
-//         document.body.removeChild(link);
-//         console.log('Download successful!');
-//     }).catch(function(error) {
-//         errorMessage.textContent = 'Error generating image: ' + error.message;
-//         errorMessage.style.display = 'block';
-//         console.error('Error generating image:', error);
-//     });
-// }
-
-                 function downloadCard() {
-
-                      console.log('u r in downcard');
-            var errorMessage = document.getElementById('errorMessage');
-            var successMessage = document.getElementById('successMessage');
-
-            errorMessage.style.display = 'none'; // Hide previous error messages
-            successMessage.style.display = 'none'; // Hide previous success messages
-
+        function downloadCard() {
+            console.log('u r in downcard');
             if (!imagesLoaded) {
-                errorMessage.textContent = 'Images are not loaded yet.';
-                errorMessage.style.display = 'block';
+                console.log('Images are not loaded yet.');
                 return;
             }
 
             var cardElement = document.querySelector('.frame');
-
-            if (!cardElement) {
-                errorMessage.textContent = 'Card element not found.';
-                errorMessage.style.display = 'block';
-                return;
-            }
 
             // Get dimensions of the card area
             var rect = cardElement.getBoundingClientRect();
             var width = rect.width;
             var height = rect.height;
 
-            var scale = 2; // Example: Increase resolution by 2x
+            var scale = 10; // Example: Increase resolution by 2x
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
@@ -266,17 +186,14 @@
             // Generate image
             domtoimage.toPng(cardElement, options).then(function(blob) {
                 window.saveAs(blob, 'YourCard.png');
-                successMessage.textContent = 'Download successful!';
-                successMessage.style.display = 'block';
+                console.log('Download successful!');
             }).catch(function(error) {
-                errorMessage.textContent = 'Error generating image: ' + error.message;
-                errorMessage.style.display = 'block';
                 console.error('Error generating image:', error);
             });
         }
 
-
         function confirmEdit() {
+            isEditing = false;
             document.getElementById('downloadButton').style.display = 'block';
             document.getElementById('saveEditButton').style.display = 'none';
             console.log('Edit saved successfully.');
@@ -299,10 +216,11 @@
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
+
+                    var uploadArea = document.getElementById('up-photo1');
                     idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
                     idPhoto.style.backgroundSize = 'cover';
                     idPhoto.style.backgroundPosition = 'center';
-                    console.log('Photo uploaded successfully.');
                 };
 
                 if (file) {
@@ -311,13 +229,9 @@
             });
 
             loadImagesBeforeDownload();
-
-});
-        
+        });
     </script>
 </body>
 </html>
-
-
 
 
