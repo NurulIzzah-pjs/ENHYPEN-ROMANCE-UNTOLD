@@ -72,6 +72,8 @@
                                     <div class="dlbutton"></div>
                                     <div class="download1">Download</div>
                                 </div>
+                                <div id="errorMessage" style="color: red; display: none; margin-top: 10px;"></div>
+                                <div id="successMessage" style="color: green; display: none; margin-top: 10px;"></div>
                             </div>
                         </div>
                         <div class="frame-container">
@@ -150,42 +152,59 @@ function changeImage(newSrc) {
 
         // Function to download the card
         function downloadCard() {
-            if (!imagesLoaded) {
-                console.log('Images are not loaded yet.');
-                return;
-            }
+    var errorMessage = document.getElementById('errorMessage');
+    var successMessage = document.getElementById('successMessage');
 
-            var cardElement = document.querySelector('.frame');
+    errorMessage.style.display = 'none'; // Hide previous error messages
+    successMessage.style.display = 'none'; // Hide previous success messages
 
-            // Get dimensions of the card area
-            var rect = cardElement.getBoundingClientRect();
-            var width = rect.width;
-            var height = rect.height;
+    if (!imagesLoaded) {
+        errorMessage.textContent = 'Images are not loaded yet.';
+        errorMessage.style.display = 'block';
+        return;
+    }
 
-            var scale = 10; // Example: Increase resolution by 2x
-            var scaledWidth = width * scale;
-            var scaledHeight = height * scale;
+    var cardElement = document.querySelector('.frame');
 
-            var options = {
-                width: scaledWidth,
-                height: scaledHeight,
-                style: {
-                    transform: 'scale(' + scale + ')', // Scale up for higher resolution
-                    transformOrigin: 'top left', // Set transform origin to top left corner
-                    'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
-                },
-                filter: function(node) {
-                    return (node.className !== 'editable'); // Exclude editable inputs from the image
-                }
-            };
+    if (!cardElement) {
+        errorMessage.textContent = 'Card element not found.';
+        errorMessage.style.display = 'block';
+        return;
+    }
 
-            // Generate image
-            domtoimage.toPng(cardElement, options).then(function(blob) {
-                window.saveAs(blob, 'YourCard.png');
-            }).catch(function(error) {
-                console.error('Error generating image:', error);
-            });
+    // Get dimensions of the card area
+    var rect = cardElement.getBoundingClientRect();
+    var width = rect.width;
+    var height = rect.height;
+
+    var scale = 10; // Example: Increase resolution by 10x
+    var scaledWidth = width * scale;
+    var scaledHeight = height * scale;
+
+    var options = {
+        width: scaledWidth,
+        height: scaledHeight,
+        style: {
+            transform: 'scale(' + scale + ')', // Scale up for higher resolution
+            transformOrigin: 'top left', // Set transform origin to top left corner
+            'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
+        },
+        filter: function(node) {
+            return (node.className !== 'editable'); // Exclude editable inputs from the image
         }
+    };
+
+    // Generate image
+    domtoimage.toPng(cardElement, options).then(function(blob) {
+        window.saveAs(blob, 'YourCard.png');
+        successMessage.textContent = 'Download successful!';
+        successMessage.style.display = 'block';
+    }).catch(function(error) {
+        errorMessage.textContent = 'Error generating image: ' + error.message;
+        errorMessage.style.display = 'block';
+        console.error('Error generating image:', error);
+    });
+}
 
         function confirmEdit() {
             isEditing = false;
@@ -227,6 +246,7 @@ function changeImage(newSrc) {
     </script>
 </body>
 </html>
+
 
 
 
