@@ -125,6 +125,9 @@ function changeImage(newSrc) {
                 promises.push(loadImage(img.src));
             });
 
+            promises.push(loadImage('mainImage'));
+            promises.push(loadImage('background'));
+
             Promise.all(promises).then(function() {
                 imagesLoaded = true;
                 document.getElementById('downloadButton').disabled = false;
