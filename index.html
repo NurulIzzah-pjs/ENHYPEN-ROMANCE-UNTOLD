@@ -1,21 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Include jQuery UI library for draggable functionality -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <title>Your Title Here</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <link rel="stylesheet" href="./enhypen.css" />
-    <title>Flip Card</title>
     <style>
-        /* Ensure images are visible in Safari */
-        .frame {
-            display: block;
-        }
-
+        /* Add your CSS styles here */
     </style>
 </head>
 <body>
@@ -108,23 +102,7 @@
             </section>
             <img class="credit-1-icon" alt="" src="/INCEPTIO/credit.png" />
         </div>
-    <div id="buttonContainer">
-        <button onclick="toggleEdit(true)" id="btnEdit">Edit</button>
-        <button onclick="toggleDrag()" id="btnToggleDrag">Drag Code</button>
-        <button onclick="confirmEdit()" id="btnEditConfirm">Confirm Edit</button>
-        <button onclick="prepareCardDownload()" id="btnDownload">Download</button>
-      </div>
     </div>
-    <!-- <button onclick="toggleEdit(true)" id="btnEdit" class="btn btn--primary">
-        Edit
-         </button>
-    <button onclick="confirmEdit()" id="btnEditConfirm" class="btn btn--primary">
-        Edit Confirm
-    </button>
-    <button onclick="prepareCardDownload()" id="btnDownload" class="btn btn--primary" data-splitbee-event="Download Card"disabled>
-        Download Card
-    </button> -->
-     <!-- <button onclick="toggleDrag()" id="btnToggleDrag" class="btn btn--primary">Toggle Drag</button> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
@@ -136,14 +114,10 @@ function changeImage(newSrc) {
         function changeBG(newSrc) {
             document.getElementById('background').src = newSrc;
         }
-        // Track if the card is flipped
         var imagesLoaded = false; // Track if images are loaded
- var isEditing = false; // Track if the card is in edit mode
-        // var isDragging = false; // Track if the input field is being dragged
-        // var isDraggableEnabled = false;
+        var isEditing = false; // Track if the card is in edit mode
 
-        
-  function loadImagesBeforeDownload() {
+        function loadImagesBeforeDownload() {
             var images = document.querySelectorAll('.frame img');
             var promises = [];
 
@@ -151,20 +125,13 @@ function changeImage(newSrc) {
                 promises.push(loadImage(img.src));
             });
 
-            // Explicitly load front.png
-            promises.push(loadImage('/INCEPTIO/beige.png'));
-
             Promise.all(promises).then(function() {
                 imagesLoaded = true;
-                // downloadCard();
-                if (document.getElementById('btnDownload').disabled) {
-            document.getElementById('btnDownload').disabled = false;
+            }).catch(function(error) {
+                console.error('Error loading images:', error);
+                throw error; // Propagate the error
+            });
         }
-    }).catch(function(error) {
-        console.error('Error loading images:', error);
-        throw error; // Propagate the error
-    });
-}
 
         function loadImage(url) {
             return new Promise((resolve, reject) => {
@@ -174,30 +141,43 @@ function changeImage(newSrc) {
                 img.src = url;
             });
         }
-        
-function prepareCardDownload() {
-    if (!imagesLoaded) {
-        loadImagesBeforeDownload(); // Load images if not already loaded
-    } else {
-        downloadCard(); // Images are already loaded, proceed to download
-    }
-}
+
+        function prepareCardDownload() {
+            if (!imagesLoaded) {
+                loadImagesBeforeDownload(); // Load images if not already loaded
+            } else {
+                downloadCard(); // Images are already loaded, proceed to download
+            }
+        }
+
         // Function to download the card
         function downloadCard() {
-        
-            if (!imagesLoaded) {
-                console.log('Images are not loaded yet.');
-                return;
-            }
+    var errorMessage = document.getElementById('errorMessage');
+    var successMessage = document.getElementById('successMessage');
 
-     var cardSide = document.querySelector('.frame');
+    errorMessage.style.display = 'none'; // Hide previous error messages
+    successMessage.style.display = 'none'; // Hide previous success messages
 
-    // Get dimensions of the visible card area
-    var rect = cardSide.getBoundingClientRect();
+    if (!imagesLoaded) {
+        errorMessage.textContent = 'Images are not loaded yet.';
+        errorMessage.style.display = 'block';
+        return;
+    }
+
+    var cardElement = document.querySelector('.frame');
+
+    if (!cardElement) {
+        errorMessage.textContent = 'Card element not found.';
+        errorMessage.style.display = 'block';
+        return;
+    }
+
+    // Get dimensions of the card area
+    var rect = cardElement.getBoundingClientRect();
     var width = rect.width;
     var height = rect.height;
 
-    var scale = 10; // Example: Increase resolution by 2x
+    var scale = 10; // Example: Increase resolution by 10x
     var scaledWidth = width * scale;
     var scaledHeight = height * scale;
 
@@ -207,124 +187,35 @@ function prepareCardDownload() {
         style: {
             transform: 'scale(' + scale + ')', // Scale up for higher resolution
             transformOrigin: 'top left', // Set transform origin to top left corner
+            'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
         },
         filter: function(node) {
             return (node.className !== 'editable'); // Exclude editable inputs from the image
         }
     };
 
-    // Set transform for back side if flipped
-    // if (isFlipped) {
-    //     cardSide.style.transform = 'rotateY(180deg)';
-    // }
-
-    // Calculate offset to center the image after scaling
-    var offsetX = (scaledWidth - width) / 2;
-    var offsetY = (scaledHeight - height) / 2;
-    cardSide.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)'; // Apply translation to center the image
-
     // Generate image
-    domtoimage.toPng(cardSide, options).then(function(blob) {
-        window.saveAs(blob, 'ENHA.png');
-
-        // Reset styles after downloading
-        cardSide.style.transform = ''; // Reset transform
-        toggleEdit(false);
+    domtoimage.toPng(cardElement, options).then(function(blob) {
+        window.saveAs(blob, 'YourCard.png');
+        successMessage.textContent = 'Download successful!';
+        successMessage.style.display = 'block';
     }).catch(function(error) {
+        errorMessage.textContent = 'Error generating image: ' + error.message;
+        errorMessage.style.display = 'block';
         console.error('Error generating image:', error);
     });
-
-    document.getElementById('btnDownload').disabled = true;
-
 }
 
-function toggleEdit(editable) {
-    isEditing = editable; 
-            var editableInputs = document.querySelectorAll('.editable');
-            editableInputs.forEach(function(input) {
-                input.disabled = !editable;
-           if (!editable) {
-            input.classList.add('disabled');
-            input.style.opacity = '100'; // Reduce opacity when not editable
-        } else {
-            input.classList.remove('disabled');
-            input.style.opacity = '1'; // Restore full opacity when editable
-        }
-            });
-
-            var idPhoto = document.getElementById('up-photo1');
-            if (editable) {
-                idPhoto.style.pointerEvents = 'auto';
-                
-            } else {
-                idPhoto.style.pointerEvents = 'none';
-            }
-     document.getElementById('btnDownload').disabled = true; // Disable download button when editing
-        }
-
-                // var isDraggingInput = false; // Track if the input is being dragged
-
-
-
         function confirmEdit() {
-            toggleEdit(false);
-            document.getElementById('btnDownload').disabled = false;
+            isEditing = false;
+            document.getElementById('downloadButton').style.display = 'block';
+            document.getElementById('saveEditButton').style.display = 'none';
         }
 
-        // JavaScript for toggle class on click
         document.addEventListener('DOMContentLoaded', function() {
-            // var flipCards = document.querySelectorAll('.flip-card');
+            var upload = document.getElementById('upload');
             var fileInput = document.getElementById('fileInput');
             var idPhoto = document.getElementById('up-photo1');
-            // var idPhoto1 = document.getElementById('id-photo1');
-            var editableInputs = document.querySelectorAll('.editable');
-             var draggables = document.querySelectorAll('.draggable');
-            
-            // flipCards.forEach(function(flipCard) {
-            //     flipCard.addEventListener('click', function(event) {
-            //         if (event.target.classList.contains('editable')) {
-            //             event.stopPropagation(); // Prevent flip if clicked on editable input
-            //             return;
-            //         }
-
-            //         // Toggle class only if not in edit mode
-            //         if (!isEditing) {
-            //             flipCard.classList.toggle('flipped');
-            //             isFlipped = !isFlipped; // Update the flipped status
-            //         }
-            //     });
-            // });
-
-            // idPhoto.addEventListener('click', function() {
-            //     fileInput.click();
-            // });
-
-            // fileInput.addEventListener('change', function(event) {
-            //     var file = event.target.files[0];
-            //     var reader = new FileReader();
-
-            //     reader.onload = function(e) {
-            //         idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
-            //         idPhoto.style.backgroundSize = 'cover';
-            //         idPhoto.style.backgroundPosition = 'center';
-            //     };
-
-            //     if (file) {
-            //         reader.readAsDataURL(file);
-            //     }
-            // });
-
-            editableInputs.forEach(function(input) {
-                input.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                });
-            });
-
-            var btnDownload = document.getElementById('btnDownload');
-            btnDownload.addEventListener('click', function() {
-                // loadImagesBeforeDownload();
-                downloadCard() ;
-            });
 
             function triggerFileInput() {
                 fileInput.click();
@@ -349,23 +240,8 @@ function toggleEdit(editable) {
                     reader.readAsDataURL(file);
                 }
             });
-            
-//     $(document).ready(function() {
-//     $(".editablecode").draggable({
-//         cancel: null // Allow dragging and editing
-//     });
 
-//     $(".editablecode").on('touchstart', function(event) {
-//         // Allow editing on touch
-//         event.stopPropagation();
-//     });
-
-//     // Make the input field editable
-//     $(".editablecode").prop('readonly', false);
-// });
-               loadImagesBeforeDownload();
-    // toggleEdit(false);
-              document.getElementById('btnDownload').addEventListener('click', prepareCardDownload);
+            loadImagesBeforeDownload();
         });
     </script>
 </body>
