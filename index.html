@@ -143,6 +143,7 @@
         }
 
         function prepareCardDownload() {
+             console.log('u r in prepare');
             if (!imagesLoaded) {
                 loadImagesBeforeDownload(); // Load images if not already loaded
             } else {
@@ -152,9 +153,11 @@
 
         // Function to download the card
 function downloadCard() {
-    var errorMessage = document.getElementById('errorMessage');
 
-    errorMessage.style.display = 'none'; // Hide previous error messages
+    console.log('u r in downcard');
+    // var errorMessage = document.getElementById('errorMessage');
+
+    // errorMessage.style.display = 'none'; // Hide previous error messages
 
     if (!imagesLoaded) {
         errorMessage.textContent = 'Images are not loaded yet.';
