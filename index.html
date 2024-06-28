@@ -190,13 +190,18 @@ console.log('u r done upscaling');
             // }).catch(function(error) {
             //     console.error('Error generating image:', error);
             // });
-                domtoimage.toPng(cardElement, options).then(function(dataUrl) {
-                    console.log('u r in dom');
-        var link = document.createElement('a');
-        link.download = 'YourCard.png';
-        link.href = dataUrl;
-        link.click();
-        console.log('Download successful!');
+    var offsetX = (scaledWidth - width) / 2;
+    var offsetY = (scaledHeight - height) / 2;
+    cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)'; // Apply translation to center the image
+
+    // Generate image
+    domtoimage.toPng(cardElement, options).then(function(blob) {
+        console.log('u r in dom');
+        window.saveAs(blob, 'ENHA.png');
+
+        // Reset styles after downloading
+        cardElement.style.transform = ''; // Reset transform
+        // toggleEdit(false);
     }).catch(function(error) {
         console.error('Error generating image:', error);
     });
