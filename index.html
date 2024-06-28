@@ -185,6 +185,10 @@ function changeImage(newSrc) {
                 // }
             };
 
+                        var offsetX = (scaledWidth - width) / 2;
+    var offsetY = (scaledHeight - height) / 2;
+    cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)'; 
+
             // Generate image
             domtoimage.toPng(cardElement, options).then(function(blob) {
                 window.saveAs(blob, 'YourCard.png');
