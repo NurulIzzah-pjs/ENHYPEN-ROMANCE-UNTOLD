@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <title>Your Title Here</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -66,11 +65,11 @@
                                     <div class="uploadbutton" id="uploadButton"></div>
                                     <div class="upload-photo">Upload Photo</div>
                                 </div>
-                                <div class="save" id="saveEditButton" onclick="confirmEdit()" ontouchend= "confirmEdit()">
+                                <div class="save" id="saveEditButton" onclick="confirmEdit()" ontouchend="confirmEdit()">
                                     <div class="savebutton"></div>
                                     <div class="save-edit">Save Edit</div>
                                 </div>
-                                <div class="download" id="downloadButton" onclick="prepareCardDownload()" ontouchend= "prepareCardDownload()">
+                                <div class="download" id="downloadButton" onclick="prepareCardDownload()" ontouchend="prepareCardDownload()">
                                     <div class="dlbutton"></div>
                                     <div class="download1">Download</div>
                                 </div>
@@ -107,7 +106,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
 
-function changeImage(newSrc) {
+        function changeImage(newSrc) {
             document.getElementById('mainImage').src = newSrc;
         }
 
@@ -168,7 +167,7 @@ function changeImage(newSrc) {
             var width = rect.width;
             var height = rect.height;
 
-            var scale = 10; // Example: Increase resolution by 2x
+            var scale = 10; // Example: Increase resolution by 10x
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
@@ -187,17 +186,10 @@ function changeImage(newSrc) {
 
             // Generate image
             domtoimage.toPng(cardElement, options).then(function(blob) {
-        // Check if the browser is mobile
-        if (/Mobi|Android/i.test(navigator.userAgent)) {
-            // Use FileSaver.js to save the file on mobile
-            saveAs(blob, 'YourCard.png');
-        } else {
-            // Use window.saveAs for other browsers
-            window.saveAs(blob, 'YourCard.png');
-        }
-    }).catch(function(error) {
-        console.error('Error generating image:', error);
-    });
+                saveAs(blob, 'YourCard.png');
+            }).catch(function(error) {
+                console.error('Error generating image:', error);
+            });
         }
 
         function confirmEdit() {
@@ -211,13 +203,13 @@ function changeImage(newSrc) {
             var upload = document.getElementById('upload');
             var fileInput = document.getElementById('fileInput');
             var idPhoto = document.getElementById('up-photo1');
-             document.getElementById('downloadButton').disabled = true;
-            
-        downloadButton.addEventListener('touchstart', prepareCardDownload);
-downloadButton.addEventListener('click', prepareCardDownload);
+            document.getElementById('downloadButton').disabled = true;
 
-saveEditButton.addEventListener('touchstart', confirmEdit);
-saveEditButton.addEventListener('click', confirmEdit);
+            downloadButton.addEventListener('touchstart', prepareCardDownload);
+            downloadButton.addEventListener('click', prepareCardDownload);
+
+            saveEditButton.addEventListener('touchstart', confirmEdit);
+            saveEditButton.addEventListener('click', confirmEdit);
 
             function triggerFileInput() {
                 fileInput.click();
@@ -231,7 +223,6 @@ saveEditButton.addEventListener('click', confirmEdit);
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
-
                     var uploadArea = document.getElementById('up-photo1');
                     idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
                     idPhoto.style.backgroundSize = 'cover';
