@@ -192,6 +192,7 @@ function changeImage(newSrc) {
             // Generate image
             domtoimage.toPng(cardElement, options).then(function(blob) {
                 window.saveAs(blob, 'YourCard.png');
+                 cardSide.style.transform = ''; 
             }).catch(function(error) {
                 console.error('Error generating image:', error);
             });
