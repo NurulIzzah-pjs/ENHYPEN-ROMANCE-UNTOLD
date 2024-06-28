@@ -182,10 +182,17 @@ function changeImage(newSrc) {
 
             // Generate image
             domtoimage.toPng(cardElement, options).then(function(blob) {
-                window.saveAs(blob, 'YourCard.png');
-            }).catch(function(error) {
-                console.error('Error generating image:', error);
-            });
+        // Check if the browser is mobile
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+            // Use FileSaver.js to save the file on mobile
+            saveAs(blob, 'YourCard.png');
+        } else {
+            // Use window.saveAs for other browsers
+            window.saveAs(blob, 'YourCard.png');
+        }
+    }).catch(function(error) {
+        console.error('Error generating image:', error);
+    });
         }
 
         function confirmEdit() {
