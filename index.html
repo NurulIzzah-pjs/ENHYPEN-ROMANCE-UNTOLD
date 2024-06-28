@@ -126,6 +126,7 @@ function changeImage(newSrc) {
 
             Promise.all(promises).then(function() {
                 imagesLoaded = true;
+                document.getElementById('downloadButton').disabled = false;
             }).catch(function(error) {
                 console.error('Error loading images:', error);
                 throw error; // Propagate the error
@@ -206,6 +207,8 @@ function changeImage(newSrc) {
             var upload = document.getElementById('upload');
             var fileInput = document.getElementById('fileInput');
             var idPhoto = document.getElementById('up-photo1');
+             document.getElementById('downloadButton').disabled = true;
+            
         downloadButton.addEventListener('touchstart', prepareCardDownload);
 downloadButton.addEventListener('click', prepareCardDownload);
 
