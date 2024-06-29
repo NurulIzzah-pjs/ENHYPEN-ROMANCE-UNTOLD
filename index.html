@@ -246,6 +246,12 @@ function changeImage(newSrc) {
                 }
             });
 
+            var btnDownload = document.getElementById('downloadButton');
+            btnDownload.addEventListener('click', function() {
+                // loadImagesBeforeDownload();
+                downloadCard() ;
+            });
+
             loadImagesBeforeDownload();
         });
     </script>
