@@ -196,17 +196,30 @@ function changeImage(newSrc) {
     
     console.log('Transform applied, offsetX:', offsetX, 'offsetY:', offsetY);
 
-    // Generate image
-    domtoimage.toPng(cardElement, options).then(function(blob) {
-        console.log('Image generation successful');
-        window.saveAs(blob, 'YourCard.png');
+var canvas = document.createElement('canvas');
+canvas.width = cardElement.offsetWidth;
+canvas.height = cardElement.offsetHeight;
+var ctx = canvas.getContext('2d');
 
-        // Reset styles after downloading
-        cardElement.style.transform = ''; // Reset transform
-        console.log('Styles reset');
-    }).catch(function(error) {
-        console.error('Error generating image:', error);
-    });
+// Draw the cardElement onto the canvas
+ctx.drawWindow(window, cardElement, 0, 0, cardElement.offsetWidth, cardElement.offsetHeight, 'rgb(255,255,255)');
+
+// Convert canvas to blob
+canvas.toBlob(function(blob) {
+    window.saveAs(blob, 'YourCard.png');
+
+           
+    // Generate image
+    // domtoimage.toPng(cardElement, options).then(function(blob) {
+    //     console.log('Image generation successful');
+    //     window.saveAs(blob, 'YourCard.png');
+
+    //     // Reset styles after downloading
+    //     cardElement.style.transform = ''; // Reset transform
+    //     console.log('Styles reset');
+    // }).catch(function(error) {
+    //     console.error('Error generating image:', error);
+    // });
 
     document.getElementById('downloadButton').disabled = true;
 }
