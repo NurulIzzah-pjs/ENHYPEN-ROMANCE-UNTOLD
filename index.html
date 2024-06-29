@@ -144,6 +144,15 @@ function changeImage(newSrc) {
             });
         }
 
+            function prepareCardDownload() {
+            console.log('u r in prepare');
+            if (!imagesLoaded) {
+                loadImagesBeforeDownload(); // Load images if not already loaded
+            } else {
+                downloadCard(); // Images are already loaded, proceed to download
+            }
+        }
+        
        function downloadCard() {
     console.log('Starting downloadCard function');
     if (!imagesLoaded) {
