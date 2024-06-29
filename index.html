@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <meta name="viewport" content="initial-scale=1, width=device-width, initial-scale=1.0" />
     <title>Your Title Here</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
-    <link rel="stylesheet" href="./enhypen.css" />
+    <link rel="stylesheet" type="text/css" href="./enhypen.css" />
     <style>
         /* Add your CSS styles here */
     </style>
@@ -19,12 +18,12 @@
             <section class="iphone-14-15-pro-max-1-inner">
                 <div class="frame-parent">
                     <div class="frame">
-                        <img class="beige-1-icon" alt="" src="/INCEPTIO/beige.png" id="background" />
+                        <img class="beige-1-icon"  alt="Avatar" src="/INCEPTIO/beige.png" id="background" />
                         <div class="uploadphotohere" id="uploadphotohere">
                             <input type="file" id="fileInput" style="opacity: 0; width: 100%; height: 100%; position: absolute; left: 0; top: 0;" />
                             <div class="up-photo1" id="up-photo1"></div>
                         </div>
-                        <img class="jk-1-icon" loading="lazy" alt="" src="/INCEPTIO/JK.png" id="mainImage" />
+                        <img class="jk-1-icon" loading="lazy"  alt="Avatar" src="/INCEPTIO/JK.png" id="mainImage" />
                     </div>
                     <div class="won-parent">
                         <div class="won" onclick="changeImage('/INCEPTIO/JW.png')" ontouchend="changeImage('/INCEPTIO/JW.png')">
@@ -80,17 +79,17 @@
                                 <div class="frame-colour">Frame colour :</div>
                             </div>
                             <div class="inceptio-parent">
-                                <div class="inceptio" onclick="changeBG('/INCEPTIO/beige.png')" ontouchend="changeBG('/INCEPTIO/beige.png')">
+                                <div class="inceptio"   onclick="changeBG('/INCEPTIO/beige.png')" ontouchend="changeBG('/INCEPTIO/beige.png')">
                                     <div class="ibutton"></div>
                                     <div class="inceptio1">Inceptio</div>
                                 </div>
-                                <div class="arcanum" onclick="changeBG('/INCEPTIO/teal.png')" ontouchend="changeBG('/INCEPTIO/teal.png')">
+                                <div class="arcanum"   onclick="changeBG('/INCEPTIO/teal.png')" ontouchend="changeBG('/INCEPTIO/teal.png')">
                                     <div class="abutton"></div>
                                     <div class="arcanum1">
                                         <p class="arcanum2">Arcanum</p>
                                     </div>
                                 </div>
-                                <div class="concessio" onclick="changeBG('/INCEPTIO/blue.png')" ontouchend="changeBG('/INCEPTIO/blue.png')">
+                                <div class="concessio"   onclick="changeBG('/INCEPTIO/blue.png')" ontouchend="changeBG('/INCEPTIO/blue.png')">
                                     <div class="cbutton"></div>
                                     <div class="concessio1">Concessio</div>
                                 </div>
@@ -102,9 +101,7 @@
             <img class="credit-1-icon" alt="" src="/INCEPTIO/credit.png" />
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@2/dist/dom-to-image-more.min.js"></script>
-<!--     <script src="path/to/dom-to-image.min.js" /> -->
-<!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
 // import domtoimage from 'dom-to-image';
@@ -132,6 +129,9 @@ function changeImage(newSrc) {
             Promise.all(promises).then(function() {
                 imagesLoaded = true;
                 console.log('Images loaded successfully.');
+                if (document.getElementById('btnDownload').disabled) {
+            document.getElementById('btnDownload').disabled = false;
+        }
             }).catch(function(error) {
                 console.error('Error loading images:', error);
                 throw error; // Propagate the error
@@ -207,6 +207,8 @@ function changeImage(newSrc) {
     }).catch(function(error) {
         console.error('Error generating image:', error);
     });
+
+    document.getElementById('btnDownload').disabled = true;
 }
 
 
@@ -257,5 +259,7 @@ function changeImage(newSrc) {
     </script>
 </body>
 </html>
+
+
 
 
