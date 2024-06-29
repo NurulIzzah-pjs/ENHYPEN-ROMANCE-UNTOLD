@@ -205,7 +205,8 @@ function changeImage(newSrc) {
         window.saveAs(blob, 'YourCard.png');
 
         // Reset styles after downloading
-        cardElement.style.transform = ''; // Reset transform
+      cardElement.style.width = ''; // Reset width
+        cardElement.style.height = ''; // Reset height
         console.log('Styles reset');
     }).catch(function(error) {
         console.error('Error generating image:', error);
