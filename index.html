@@ -144,72 +144,59 @@ function changeImage(newSrc) {
             });
         }
 
-        function prepareCardDownload() {
-            console.log('u r in prepare');
-            if (!imagesLoaded) {
-                loadImagesBeforeDownload(); // Load images if not already loaded
-            } else {
-                downloadCard(); // Images are already loaded, proceed to download
-            }
-        }
+       function downloadCard() {
+    console.log('Starting downloadCard function');
+    if (!imagesLoaded) {
+        console.log('Images are not loaded yet.');
+        return;
+    }
 
-        // Function to download the card
-        function downloadCard() {
-            console.log('u r in downcard');
-            if (!imagesLoaded) {
-                console.log('Images are not loaded yet.');
-                return;
-            }
+    var cardElement = document.querySelector('.frame');
+    if (!cardElement) {
+        console.log('Card element not found.');
+        return;
+    }
 
-            var cardElement = document.querySelector('.frame');
+    // Get dimensions of the card area
+    var rect = cardElement.getBoundingClientRect();
+    var width = rect.width;
+    var height = rect.height;
 
-            // Get dimensions of the card area
-            var rect = cardElement.getBoundingClientRect();
-            var width = rect.width;
-            var height = rect.height;
+    var scale = 2; // Reduced scale factor for testing on mobile
+    var scaledWidth = width * scale;
+    var scaledHeight = height * scale;
 
-            var scale = 10; // Example: Increase resolution by 2x
-            var scaledWidth = width * scale;
-            var scaledHeight = height * scale;
+    var options = {
+        width: scaledWidth,
+        height: scaledHeight,
+        style: {
+            transform: 'scale(' + scale + ')',
+            transformOrigin: 'top left',
+        },
+    };
+    
+    console.log('Scale set, options:', options);
 
-            var options = {
-                width: scaledWidth,
-                height: scaledHeight,
-                style: {
-                    transform: 'scale(' + scale + ')', // Scale up for higher resolution
-                    transformOrigin: 'top left', // Set transform origin to top left corner
-                    // 'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
-                },
-                // filter: function(node) {
-                //     return (node.className !== 'editable'); // Exclude editable inputs from the image
-                // }
-            };
-console.log('u r done upscaling');
-            // Generate image
-            // domtoimage.toPng(cardElement, options).then(function(blob) {
-            //     window.saveAs(blob, 'YourCard.png');
-            //     console.log('Download successful!');
-            // }).catch(function(error) {
-            //     console.error('Error generating image:', error);
-            // });
+    // Apply translation to center the image
     var offsetX = (scaledWidth - width) / 2;
     var offsetY = (scaledHeight - height) / 2;
-    cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)'; // Apply translation to center the image
-
-             console.log('done set');
+    cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)';
+    
+    console.log('Transform applied, offsetX:', offsetX, 'offsetY:', offsetY);
 
     // Generate image
     domtoimage.toPng(cardElement, options).then(function(blob) {
-        console.log('u r in dom');
-        window.saveAs(blob, 'ENHA.png');
+        console.log('Image generation successful');
+        window.saveAs(blob, 'YourCard.png');
 
         // Reset styles after downloading
         cardElement.style.transform = ''; // Reset transform
-        // toggleEdit(false);
+        console.log('Styles reset');
     }).catch(function(error) {
         console.error('Error generating image:', error);
     });
-        }
+}
+
 
         function confirmEdit() {
             isEditing = false;
