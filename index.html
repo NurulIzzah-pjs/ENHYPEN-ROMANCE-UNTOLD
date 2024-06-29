@@ -129,8 +129,8 @@ function changeImage(newSrc) {
             Promise.all(promises).then(function() {
                 imagesLoaded = true;
                 console.log('Images loaded successfully.');
-                if (document.getElementById('btnDownload').disabled) {
-            document.getElementById('btnDownload').disabled = false;
+                if (document.getElementById('downloadButton').disabled) {
+            document.getElementById('downloadButton').disabled = false;
         }
             }).catch(function(error) {
                 console.error('Error loading images:', error);
@@ -208,7 +208,7 @@ function changeImage(newSrc) {
         console.error('Error generating image:', error);
     });
 
-    document.getElementById('btnDownload').disabled = true;
+    document.getElementById('downloadButton').disabled = true;
 }
 
 
@@ -259,6 +259,9 @@ function changeImage(newSrc) {
     </script>
 </body>
 </html>
+
+
+
 
 
 
