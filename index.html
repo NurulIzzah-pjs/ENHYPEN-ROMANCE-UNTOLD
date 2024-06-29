@@ -103,6 +103,7 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script>
 // import domtoimage from 'dom-to-image';
 // var domtoimage = require('dom-to-image');
@@ -196,17 +197,12 @@ function changeImage(newSrc) {
     
     console.log('Transform applied, offsetX:', offsetX, 'offsetY:', offsetY);
 
-var canvas = document.createElement('canvas');
-canvas.width = cardElement.offsetWidth;
-canvas.height = cardElement.offsetHeight;
-var ctx = canvas.getContext('2d');
-
-// Draw the cardElement onto the canvas
-ctx.drawWindow(window, cardElement, 0, 0, cardElement.offsetWidth, cardElement.offsetHeight, 'rgb(255,255,255)');
-
-// Convert canvas to blob
-canvas.toBlob(function(blob) {
-    window.saveAs(blob, 'YourCard.png');
+html2canvas(cardElement).then(function(canvas) {
+    canvas.toBlob(function(blob) {
+        window.saveAs(blob, 'YourCard.png');
+    });
+}).catch(function(error) {
+    console.error('Error generating image:', error);
 });
 
            
