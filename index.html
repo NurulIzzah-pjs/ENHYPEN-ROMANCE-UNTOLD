@@ -1,150 +1,268 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-
-    <link rel="stylesheet" href="./enhypen.css" />
-
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Nerko One:wght@400&display=swap"
-    />
-  </head>
-  <body>
+     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="initial-scale=1, width=device-width, initial-scale=1.0" />
+    <title>Your Title Here</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./enhypen.css" />
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
     <div class="container">
-      <div class="iphone-14-15-pro-max-1">
-        <section class="iphone-14-15-pro-max-1-inner">
-          <div class="frame-parent">
-            <div class="frame">
-              <img class="beige-1-icon" alt="" src="/INCEPTIO/beige.png" id="background" />
-              <div class="uploadphotohere" id="uploadphotohere">
-                <div class="up-photo1" id="up-photo1"></div>
-              </div>
-              <img
-                class="jk-1-icon"
-                loading="lazy"
-                alt=""
-                src="/INCEPTIO/JK.png"
-                id="mainImage"
-              />
-            </div>
-            <div class="won-parent">
-              <div class="won" onclick="changeImage('/INCEPTIO/JW.png')" ontouchend="changeImage('/INCEPTIO/JW.png')">
-                <div class="hsbutton"></div>
-                <div class="jungwon">Jungwon</div>
-              </div>
-              <div class="hee" onclick="changeImage('/INCEPTIO/HS.png')" ontouchend="changeImage('/INCEPTIO/HS.png')">
-                <div class="hsbutton1"></div>
-                <div class="heeseung">Heeseung</div>
-              </div>
-              <div class="jay" onclick="changeImage('/INCEPTIO/JY.png')" ontouchend="changeImage('/INCEPTIO/JY.png')">
-                <div class="jybutton"></div>
-                <div class="jay1">Jay</div>
-              </div>
-              <div class="jake" onclick="changeImage('/INCEPTIO/JK.png')" ontouchend="changeImage('/INCEPTIO/JK.png')">
-                <div class="jkbutton"></div>
-                <div class="jake1">Jake</div>
-              </div>
-              <div class="hoon" onclick="changeImage('/INCEPTIO/SH.png')" ontouchend="changeImage('/INCEPTIO/SH.png')">
-                <div class="shbutton"></div>
-                <div class="sunghoon">Sunghoon</div>
-              </div>
-              <div class="ddeonu" onclick="changeImage('/INCEPTIO/SN.png')" ontouchend="changeImage('/INCEPTIO/SN.png')">
-                <div class="snbutton"></div>
-                <div class="sunoo">
-                  <p class="sunoo1">Sunoo</p>
-                </div>
-              </div>
-              <div class="riki" onclick="changeImage('/INCEPTIO/NK.png')" ontouchend="changeImage('/INCEPTIO/NK.png')">
-                <div class="nkbutton"></div>
-                <div class="ni-ki">Ni-ki</div>
-              </div>
-            </div>
-            <div class="frame-group">
-              <div class="upload-options-wrapper">
-                <div class="upload-options">
-                  <div class="upload" id="upload">
-                    <input type="file" id="fileInput" style="opacity: 0; width: 100%; height: 100%; position: absolute; left: 0; top: 0;" />
-                    <div class="uploadbutton" id="uploadButton"></div>
-                    <div class="upload-photo">Upload Photo</div>
-                  </div>
-                  <div class="save">
-                    <div class="savebutton"></div>
-                    <div class="save-edit">Save Edit</div>
-                  </div>
-                  <div class="download">
-                    <div class="dlbutton"></div>
-                    <div class="download1">Download</div>
-                  </div>
-                </div>
-              </div>
-              <div class="frame-container">
-                <div class="frame-colour-wrapper">
-                  <div class="frame-colour">Frame colour :</div>
-                </div>
-                <div class="inceptio-parent">
-                  <div class="inceptio" onclick="changeBG('/INCEPTIO/beige.png')" ontouchend="changeBG('/INCEPTIO/beige.png')">
-                    <div class="ibutton"></div>
-                    <div class="inceptio1">Inceptio</div>
-                  </div>
-                  <div class="arcanum" onclick="changeBG('/INCEPTIO/teal.png')" ontouchend="changeBG('/INCEPTIO/teal.png')">
-                    <div class="abutton"></div>
-                    <div class="arcanum1">
-                      <p class="arcanum2">Arcanum</p>
+        <div class="iphone-14-15-pro-max-1">
+            <section class="iphone-14-15-pro-max-1-inner">
+                <div class="frame-parent">
+                    <div class="frame">
+                        <img class="beige-1-icon"  alt="Avatar" src="/INCEPTIO/beige.png" id="background" />
+                        <div class="uploadphotohere" id="uploadphotohere">
+                            <input type="file" id="fileInput" style="opacity: 0; width: 100%; height: 100%; position: absolute; left: 0; top: 0;" />
+                            <div class="up-photo1" id="up-photo1"></div>
+                        </div>
+                        <img class="jk-1-icon" loading="lazy"  alt="Avatar" src="/INCEPTIO/JK.png" id="mainImage" />
                     </div>
-                  </div>
-                  <div class="concessio" onclick="changeBG('/INCEPTIO/blue.png')" ontouchend="changeBG('/INCEPTIO/blue.png')">
-                    <div class="cbutton"></div>
-                    <div class="concessio1">Concessio</div>
-                  </div>
+                    <div class="won-parent">
+                        <div class="won" onclick="changeImage('/INCEPTIO/JW.png')" ontouchend="changeImage('/INCEPTIO/JW.png')">
+                            <div class="hsbutton"></div>
+                            <div class="jungwon">Jungwon</div>
+                        </div>
+                        <div class="hee" onclick="changeImage('/INCEPTIO/HS.png')" ontouchend="changeImage('/INCEPTIO/HS.png')">
+                            <div class="hsbutton1"></div>
+                            <div class="heeseung">Heeseung</div>
+                        </div>
+                        <div class="jay" onclick="changeImage('/INCEPTIO/JY.png')" ontouchend="changeImage('/INCEPTIO/JY.png')">
+                            <div class="jybutton"></div>
+                            <div class="jay1">Jay</div>
+                        </div>
+                        <div class="jake" onclick="changeImage('/INCEPTIO/JK.png')" ontouchend="changeImage('/INCEPTIO/JK.png')">
+                            <div class="jkbutton"></div>
+                            <div class="jake1">Jake</div>
+                        </div>
+                        <div class="hoon" onclick="changeImage('/INCEPTIO/SH.png')" ontouchend="changeImage('/INCEPTIO/SH.png')">
+                            <div class="shbutton"></div>
+                            <div class="sunghoon">Sunghoon</div>
+                        </div>
+                        <div class="ddeonu" onclick="changeImage('/INCEPTIO/SN.png')" ontouchend="changeImage('/INCEPTIO/SN.png')">
+                            <div class="snbutton"></div>
+                            <div class="sunoo">
+                                <p class="sunoo1">Sunoo</p>
+                            </div>
+                        </div>
+                        <div class="riki" onclick="changeImage('/INCEPTIO/NK.png')" ontouchend="changeImage('/INCEPTIO/NK.png')">
+                            <div class="nkbutton"></div>
+                            <div class="ni-ki">Ni-ki</div>
+                        </div>
+                    </div>
+                    <div class="frame-group">
+                        <div class="upload-options-wrapper">
+                            <div class="upload-options">
+                                <div class="upload" id="upload">
+                                    <div class="uploadbutton" id="uploadButton"></div>
+                                    <div class="upload-photo">Upload Photo</div>
+                                </div>
+                                <div class="save" id="saveEditButton" onclick="confirmEdit()">
+                                    <div class="savebutton"></div>
+                                    <div class="save-edit">Save Edit</div>
+                                </div>
+                                <div class="download" id="downloadButton" onclick="prepareCardDownload()">
+                                    <div class="dlbutton"></div>
+                                    <div class="download1">Download</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="frame-container">
+                            <div class="frame-colour-wrapper">
+                                <div class="frame-colour">Frame colour :</div>
+                            </div>
+                            <div class="inceptio-parent">
+                                <div class="inceptio"   onclick="changeBG('/INCEPTIO/beige.png')" ontouchend="changeBG('/INCEPTIO/beige.png')">
+                                    <div class="ibutton"></div>
+                                    <div class="inceptio1">Inceptio</div>
+                                </div>
+                                <div class="arcanum"   onclick="changeBG('/INCEPTIO/teal.png')" ontouchend="changeBG('/INCEPTIO/teal.png')">
+                                    <div class="abutton"></div>
+                                    <div class="arcanum1">
+                                        <p class="arcanum2">Arcanum</p>
+                                    </div>
+                                </div>
+                                <div class="concessio"   onclick="changeBG('/INCEPTIO/blue.png')" ontouchend="changeBG('/INCEPTIO/blue.png')">
+                                    <div class="cbutton"></div>
+                                    <div class="concessio1">Concessio</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <img class="credit-1-icon" alt="" src="/INCEPTIO/credit.png" />
-      </div>
+            </section>
+            <img class="credit-1-icon" alt="" src="/INCEPTIO/credit.png" />
+        </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
-      function changeImage(newSrc) {
-        document.getElementById('mainImage').src = newSrc;
-      }
+// import domtoimage from 'dom-to-image';
+// var domtoimage = require('dom-to-image');
 
-      function changeBG(newSrc) {
-        document.getElementById('background').src = newSrc;
-      }
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var upload = document.getElementById('upload');
-        var fileInput = document.getElementById('fileInput');
-
-        function triggerFileInput() {
-          fileInput.click();
+function changeImage(newSrc) {
+            document.getElementById('mainImage').src = newSrc;
+            console.log('Background changed successfully.');
         }
 
-        upload.addEventListener('click', triggerFileInput);
-        upload.addEventListener('touchstart', triggerFileInput);
+        function changeBG(newSrc) {
+            document.getElementById('background').src = newSrc;
+        }
+        var imagesLoaded = false; // Track if images are loaded
+        var isEditing = false; // Track if the card is in edit mode
 
-        fileInput.addEventListener('change', function(event) {
-          var file = event.target.files[0];
-          if (!file) {
-            return;
-          }
-          var reader = new FileReader();
+        function loadImagesBeforeDownload() {
+            var images = document.querySelectorAll('.frame img');
+            var promises = [];
 
-          reader.onload = function(e) {
-            var uploadArea = document.getElementById('up-photo1');
-            uploadArea.style.backgroundImage = 'url(' + e.target.result + ')';
-            uploadArea.style.backgroundSize = 'cover';
-            uploadArea.style.backgroundPosition = 'center';
-          };
+            images.forEach(function(img) {
+                promises.push(loadImage(img.src));
+            });
 
-          reader.readAsDataURL(file);
-        });
+            Promise.all(promises).then(function() {
+                imagesLoaded = true;
+                console.log('Images loaded successfully.');
+                if (document.getElementById('downloadButton').disabled) {
+            document.getElementById('downloadButton').disabled = false;
+        }
+            }).catch(function(error) {
+                console.error('Error loading images:', error);
+                throw error; // Propagate the error
+            });
+        }
 
+        function loadImage(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve();
+                img.onerror = () => reject();
+                img.src = url;
+            });
+        }
+
+            function prepareCardDownload() {
+            console.log('u r in prepare');
+            if (!imagesLoaded) {
+                loadImagesBeforeDownload(); // Load images if not already loaded
+            } else {
+                downloadCard(); // Images are already loaded, proceed to download
+            }
+        }
         
-      });
+       function downloadCard() {
+    console.log('Starting downloadCard function');
+    if (!imagesLoaded) {
+        console.log('Images are not loaded yet.');
+        return;
+    }
+
+    var cardElement = document.querySelector('.frame');
+    if (!cardElement) {
+        console.log('Card element not found.');
+        return;
+    }
+
+    // Get dimensions of the card area
+    var rect = cardElement.getBoundingClientRect();
+    var width = rect.width;
+    var height = rect.height;
+
+    var scale = 2; // Reduced scale factor for testing on mobile
+    var scaledWidth = width * scale;
+    var scaledHeight = height * scale;
+
+    var options = {
+        width: scaledWidth,
+        height: scaledHeight,
+        style: {
+            transform: 'scale(' + scale + ')',
+            transformOrigin: 'top left',
+        },
+    };
+    
+    console.log('Scale set, options:', options);
+
+    // Apply translation to center the image
+    var offsetX = (scaledWidth - width) / 2;
+    var offsetY = (scaledHeight - height) / 2;
+    cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)';
+    
+    console.log('Transform applied, offsetX:', offsetX, 'offsetY:', offsetY);
+
+    // Generate image
+    domtoimage.toPng(cardElement, options).then(function(blob) {
+        console.log('Image generation successful');
+        window.saveAs(blob, 'YourCard.png');
+
+        // Reset styles after downloading
+        cardElement.style.transform = ''; // Reset transform
+        console.log('Styles reset');
+    }).catch(function(error) {
+        console.error('Error generating image:', error);
+    });
+
+    document.getElementById('downloadButton').disabled = true;
+}
+
+
+        function confirmEdit() {
+            isEditing = false;
+            document.getElementById('downloadButton').style.display = 'block';
+            document.getElementById('saveEditButton').style.display = 'none';
+            console.log('Edit saved successfully.');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var upload = document.getElementById('upload');
+            var fileInput = document.getElementById('fileInput');
+            var idPhoto = document.getElementById('up-photo1');
+
+            function triggerFileInput() {
+                fileInput.click();
+            }
+
+            upload.addEventListener('click', triggerFileInput);
+            upload.addEventListener('touchstart', triggerFileInput);
+
+            fileInput.addEventListener('change', function(event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+
+                    var uploadArea = document.getElementById('up-photo1');
+                    idPhoto.style.backgroundImage = 'url(' + e.target.result + ')';
+                    idPhoto.style.backgroundSize = 'cover';
+                    idPhoto.style.backgroundPosition = 'center';
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            var btnDownload = document.getElementById('downloadButton');
+            btnDownload.addEventListener('click', function() {
+                // loadImagesBeforeDownload();
+                downloadCard() ;
+            });
+
+            loadImagesBeforeDownload();
+        });
     </script>
-  </body>
+</body>
 </html>
+
+
+
+
+
+
+
