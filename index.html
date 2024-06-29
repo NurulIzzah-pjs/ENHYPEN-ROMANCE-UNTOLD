@@ -197,26 +197,26 @@ function changeImage(newSrc) {
     
     console.log('Transform applied, offsetX:', offsetX, 'offsetY:', offsetY);
 
-html2canvas(cardElement).then(function(canvas) {
-    canvas.toBlob(function(blob) {
-        window.saveAs(blob, 'YourCard.png');
-    });
-}).catch(function(error) {
-    console.error('Error generating image:', error);
-});
+// html2canvas(cardElement).then(function(canvas) {
+//     canvas.toBlob(function(blob) {
+//         window.saveAs(blob, 'YourCard.png');
+//     });
+// }).catch(function(error) {
+//     console.error('Error generating image:', error);
+// });
 
            
     // Generate image
-    // domtoimage.toPng(cardElement, options).then(function(blob) {
-    //     console.log('Image generation successful');
-    //     window.saveAs(blob, 'YourCard.png');
+    domtoimage.toPng(cardElement, options).then(function(blob) {
+        console.log('Image generation successful');
+        window.saveAs(blob, 'YourCard.png');
 
-    //     // Reset styles after downloading
-    //     cardElement.style.transform = ''; // Reset transform
-    //     console.log('Styles reset');
-    // }).catch(function(error) {
-    //     console.error('Error generating image:', error);
-    // });
+        // Reset styles after downloading
+        cardElement.style.transform = ''; // Reset transform
+        console.log('Styles reset');
+    }).catch(function(error) {
+        console.error('Error generating image:', error);
+    });
 
     document.getElementById('downloadButton').disabled = true;
 }
