@@ -182,19 +182,22 @@ function changeImage(newSrc) {
         width: scaledWidth,
         height: scaledHeight,
         style: {
-            transform: 'scale(' + scale + ')',
-            transformOrigin: 'top left',
+            // transform: 'scale(' + scale + ')',
+            // transformOrigin: 'top left',
+             width: scaledWidth + 'px',
+            height: scaledHeight + 'px',
+            margin: '0',
         },
     };
     
     console.log('Scale set, options:', options);
 
-    // Apply translation to center the image
-    var offsetX = (scaledWidth - width) / 2;
-    var offsetY = (scaledHeight - height) / 2;
-    cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)';
+    // // Apply translation to center the image
+    // var offsetX = (scaledWidth - width) / 2;
+    // var offsetY = (scaledHeight - height) / 2;
+    // cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)';
     
-    console.log('Transform applied, offsetX:', offsetX, 'offsetY:', offsetY);
+    // console.log('Transform applied, offsetX:', offsetX, 'offsetY:', offsetY);
 
     // Generate image
     domtoimage.toPng(cardElement, options).then(function(blob) {
