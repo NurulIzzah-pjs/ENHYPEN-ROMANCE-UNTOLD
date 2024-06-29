@@ -209,7 +209,7 @@ function changeImage(newSrc) {
 
            
     // Generate image
-    domtoimage.toPng(cardElement, options).then(function(blob) {
+    domtoimage.toPng(cardElement).then(function(blob) {
         console.log('Image generation successful');
         window.saveAs(blob, 'YourCard.png');
 
