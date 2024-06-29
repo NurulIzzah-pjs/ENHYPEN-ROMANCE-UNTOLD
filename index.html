@@ -166,7 +166,7 @@ function changeImage(newSrc) {
             var width = rect.width;
             var height = rect.height;
 
-            var scale = 2; // Example: Increase resolution by 2x
+            var scale = 10; // Example: Increase resolution by 2x
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
@@ -178,9 +178,9 @@ function changeImage(newSrc) {
                     transformOrigin: 'top left', // Set transform origin to top left corner
                     // 'text-shadow': '0 2px 4px rgba(0, 0, 0, 0.5)' // Ensure text-shadow is included
                 },
-                filter: function(node) {
-                    return (node.className !== 'editable'); // Exclude editable inputs from the image
-                }
+                // filter: function(node) {
+                //     return (node.className !== 'editable'); // Exclude editable inputs from the image
+                // }
             };
 console.log('u r done upscaling');
             // Generate image
@@ -193,6 +193,8 @@ console.log('u r done upscaling');
     var offsetX = (scaledWidth - width) / 2;
     var offsetY = (scaledHeight - height) / 2;
     cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)'; // Apply translation to center the image
+
+             console.log('done set');
 
     // Generate image
     domtoimage.toPng(cardElement, options).then(function(blob) {
