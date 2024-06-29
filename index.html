@@ -122,7 +122,7 @@ function changeImage(newSrc) {
         var isEditing = false; // Track if the card is in edit mode
 
         function loadImagesBeforeDownload() {
-            var images = document.querySelectorAll('.frame img');
+            var images = document.querySelectorAll('.beige-1-icon img, .jk-1-icon img');
             var promises = [];
 
             images.forEach(function(img) {
@@ -166,7 +166,7 @@ function changeImage(newSrc) {
         return;
     }
 
-    var cardElement = document.querySelector('.frame');
+      var cardElement=  document.querySelector('.beige-1-icon') : document.querySelector('.jk-1-icon');
     if (!cardElement) {
         console.log('Card element not found.');
         return;
