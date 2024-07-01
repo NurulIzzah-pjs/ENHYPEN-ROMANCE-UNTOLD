@@ -169,12 +169,11 @@ function changeImage(newSrc) {
         return;
     }
 
-    // Get dimensions of the card area
     var rect = cardElement.getBoundingClientRect();
     var width = rect.width;
     var height = rect.height;
 
-    var scale = 2; // Reduced scale factor for testing on mobile
+    var scale = window.devicePixelRatio || 2; // Adjust scale based on device pixel ratio
     var scaledWidth = width * scale;
     var scaledHeight = height * scale;
 
@@ -184,30 +183,22 @@ function changeImage(newSrc) {
         style: {
             transform: 'scale(' + scale + ')',
             transformOrigin: 'top left',
-            //  width: scaledWidth + 'px',
-            // height: scaledHeight + 'px',
-            // margin: '0',
         },
     };
     
     console.log('Scale set, options:', options);
 
-    // // Apply translation to center the image
     var offsetX = (scaledWidth - width) / 2;
     var offsetY = (scaledHeight - height) / 2;
     cardElement.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px)';
     
     console.log('Transform applied, offsetX:', offsetX, 'offsetY:', offsetY);
 
-    // Generate image
     domtoimage.toPng(cardElement, options).then(function(blob) {
         console.log('Image generation successful');
         window.saveAs(blob, 'YourCard.png');
-         cardElement.style.transform = ''; // Reset width
+        cardElement.style.transform = ''; // Reset transform
 
-        // Reset styles after downloading
-      // cardElement.style.width = ''; // Reset width
-      //   cardElement.style.height = ''; // Reset height
         console.log('Styles reset');
     }).catch(function(error) {
         console.error('Error generating image:', error);
@@ -215,6 +206,8 @@ function changeImage(newSrc) {
 
     document.getElementById('downloadButton').disabled = true;
 }
+
+
 
 
         function confirmEdit() {
